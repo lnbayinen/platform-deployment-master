@@ -1,0 +1,13 @@
+name             'nw-hwrpm'
+maintainer       'RSA Security, LLC'
+maintainer_email 'support@rsa.com'
+license          'Proprietary - All Rights Reserved'
+description      'Installs/configures nw-hwrpm'
+long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+version          '0.1.0'
+supports         'centos', '>= 7'
+depends          'firewall', '~> 2.5.2'
+depends          'nw-base', '>= 0.2.0'
+chef_version     '>= 12'
+source_url       'file:///dev/null'
+issues_url       'file:///dev/null'

@@ -1,0 +1,144 @@
+heat_template_version: 2015-10-15
+description: Deploy a NetWitness orchestration environment
+
+parameters:
+  rpm_server:
+    type: string
+    label: RPM Server IP
+    description: Location of POC RPMs
+  key_name:
+    type: string
+    label: SSH Key Name
+    description: Key pair to be used
+    constraints:
+      - custom_constraint: nova.keypair
+  image:
+    type: string
+    label: Image Source
+    description: Image name or ID
+    default: 8424dd64-cc30-4f53-b961-40208e34bfc4
+    constraints:
+      - custom_constraint: glance.image
+  flavor:
+    type: string
+    label: Instance Type
+    description: Flavor to be used
+    default: m1.small
+    constraints:
+      - custom_constraint: nova.flavor
+  private_network:
+    type: string
+    label: Private Network
+    description: Name or ID of the target network
+    constraints:
+      - custom_constraint: neutron.network
+  external_network:
+    type: string
+    label: External Network
+    description: Name or ID of the external network
+    constraints:
+      - custom_constraint: neutron.network
+  private_subnet:
+    type: string
+    label: Private Subnet
+    description: Name or ID of the target subnet
+    constraints:
+      - custom_constraint: neutron.subnet
+
+
+parameter_groups:
+  - label: Instance
+    parameters:
+      - key_name
+      - image
+      - flavor
+  - label: Networking
+    parameters:
+      - private_network
+      - private_subnet
+
+resources:
+  node0_port:
+    type: OS::Neutron::Port
+    properties:
+      network: { get_param: private_network }
+      fixed_ips:
+        - subnet: { get_param: private_subnet }
+      security_groups: [ "VeryOpen" ]
+  node0_floating:
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: { get_param: external_network }
+  node0_assign_floating:
+    type: OS::Neutron::FloatingIPAssociation
+    depends_on:
+      - node0_floating
+      - node0_port
+    properties:
+      floatingip_id: { get_resource: node0_floating }
+      port_id: { get_resource: node0_port }
+  nodex1_port:
+    type: OS::Neutron::Port
+    properties:
+      network: { get_param: private_network }
+      fixed_ips:
+        - subnet: { get_param: private_subnet }
+      security_groups: [ "VeryOpen" ]
+  nodex2_port:
+    type: OS::Neutron::Port
+    properties:
+      network: { get_param: private_network }
+      fixed_ips:
+        - subnet: { get_param: private_subnet }
+      security_groups: [ "VeryOpen" ]
+  node0:
+    type: OS::Nova::Server
+    depends_on: node0_port
+    properties:
+      name: node0
+      key_name: { get_param: key_name }
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks:
+          - port: { get_resource: node0_port }
+      user_data_format: RAW
+      user_data:
+          str_replace:
+              template: { get_file: "salt_master_config.multipart" }
+              params:
+                  $RPM_SERVER: { get_param: rpm_server }
+  nodex1:
+    type: OS::Nova::Server
+    depends_on: nodex1_port
+    properties:
+      name: nodex1
+      key_name: { get_param: key_name }
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks:
+          - port: { get_resource: nodex1_port }
+      user_data_format: RAW
+      user_data:
+          str_replace:
+              template: { get_file: "salt_minion_config.multipart" }
+              params:
+                  $MASTER_IP: { get_attr: [node0_port, fixed_ips, 0, ip_address] }
+                  $RPM_SERVER: { get_param: rpm_server }
+  nodex2:
+    type: OS::Nova::Server
+    depends_on: nodex2_port
+    properties:
+      name: nodex2
+      key_name: { get_param: key_name }
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks:
+          - port: { get_resource: nodex2_port }
+      user_data_format: RAW
+      user_data:
+          str_replace:
+              template: { get_file: "salt_minion_config.multipart" }
+              params:
+                  $MASTER_IP: { get_attr: [node0_port, fixed_ips, 0, ip_address] }
+                  $RPM_SERVER: { get_param: rpm_server }
+outputs:

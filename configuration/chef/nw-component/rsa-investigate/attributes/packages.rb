@@ -1,0 +1,1 @@
+default['rsa-investigate']['packages'] = []

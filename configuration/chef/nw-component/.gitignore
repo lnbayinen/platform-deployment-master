@@ -1,0 +1,14 @@
+# local-only RVM config files
+.ruby-version
+.ruby-gemset
+
+# working files
+cookbooks
+workspace
+
+# unwanted
+nw-*/Berksfile.lock
+nw-*/Gemfile.lock
+rsa-*/Berksfile.lock
+rsa-*/Gemfile.lock
+target/

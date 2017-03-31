@@ -1,0 +1,21 @@
+#
+# Copyright (c) RSA The Security Division of EMC
+#
+
+template(name="rsa_json_template" type="list") {
+    property(name="jsonmesg")
+    constant(value="\n")
+}
+
+module(load="omprog")
+
+if $syslogfacility-text contains "auth" then
+    action(
+        name="rsa_sa_audit"
+        type="omprog"
+        binary="/usr/sbin/rsa_audit_onramp --node_id=<%= @node_uuid %>"
+        template="rsa_json_template"
+    )
+
+if (($msg contains "Security Analytics") and ($msg contains "RSA") and ($msg contains "category") and ($msg contains "deviceService") and ($msg contains "identity") and (($msg contains "SA_SERVER") or ($msg contains "SMS_SERVER") or ($msg contains "REPORTING_ENGINE") or ($msg contains "INCIDENT_MANAGEMENT") or ($msg contains "EVENT_STREAM_ANALYSIS") or ($msg contains "MALWARE_ANALYSIS"))) or (($msg contains "severity") and ($msg contains "userRole") and ($msg contains "remoteAddress")) then stop
+

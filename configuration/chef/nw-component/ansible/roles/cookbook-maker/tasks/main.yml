@@ -1,0 +1,7 @@
+---
+- include: dirs.yml
+- include: static.yml
+- include: attributes.yml
+- include: recipes.yml
+- include: unit-tests.yml
+- include: other.yml

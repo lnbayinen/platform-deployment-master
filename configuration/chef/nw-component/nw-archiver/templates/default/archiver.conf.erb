@@ -1,0 +1,446 @@
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin generic_cpp>
+    PluginModulePath "/usr/lib64/collectd"
+
+    <Module "NgNativeReader" "NwArchiver-FastUpdate">
+        port      "56008"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "10"
+
+        <stats>
+            <stat>
+                path             "/sys/stats/service.status"
+                plugin           "archiver_sys"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "service.status"
+                <meta>
+                    name         "Service State"
+                    description  "%description%"
+                    category     "ProcessInfo"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/stats/session.rate"
+                plugin           "archiver_archiver"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Archiver"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/status"
+                plugin           "archiver_database"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "status"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/stats/status"
+                plugin           "archiver_archiver"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "status"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Archiver"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/sdk/stats/queries.active"
+                plugin           "archiver_sdk"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queries.active"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Archiver"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/sdk/stats/queries.pending"
+                plugin           "archiver_sdk"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queries.pending"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Archiver"
+                    path         "%path%"
+                </meta>
+            </stat>
+        </stats>
+    </Module>
+
+    <Module "NgNativeReader" "NwArchiver-NormalUpdate">
+        port      "56008"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "60"
+
+        <stats>
+            # Begin Service
+            <stat>
+                path             "/archiver/devices/<.*>/stats/meta.rate"
+                plugin           "archiver_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/devices/<.*>/stats/meta.rate.max"
+                plugin           "archiver_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/devices/<.*>/stats/session.rate"
+                plugin           "archiver_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/devices/<.*>/stats/session.rate.max"
+                plugin           "archiver_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/devices/<.*>/stats/sessions.behind"
+                plugin           "archiver_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "sessions.behind"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/devices/<.*>/stats/status"
+                plugin           "archiver_devices.%1%"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "status"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/devices/<.*>/stats/time.last"
+                plugin           "archiver_devices.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "time.last"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                    units        "UTC"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/devices/<.*>/stats/time.network"
+                plugin           "archiver_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "time.network"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    path         "%path%"
+                    subitem      "%1%"
+                    p1           "%1%"
+                    units        "milliseconds"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/devices/<.*>/stats/time.network.max"
+                plugin           "archiver_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "time.network.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    path         "%path%"
+                    subitem      "%1%"
+                    p1           "%1%"
+                    units        "milliseconds"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/stats/meta.free.pages"
+                plugin           "archiver_archiver"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.free.pages"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Archiver"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/stats/meta.rate"
+                plugin           "archiver_archiver"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Archiver"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/stats/meta.rate.max"
+                plugin           "archiver_archiver"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Archiver"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/stats/session.free.pages"
+                plugin           "archiver_archiver"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.free.pages"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Archiver"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/archiver/stats/session.rate.max"
+                plugin           "archiver_archiver"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Archiver"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.free.space"
+                plugin           "archiver_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.free.space"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.rate"
+                plugin           "archiver_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.rate.max"
+                plugin           "archiver_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.total"
+                plugin           "archiver_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.total"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.volume.bytes"
+                plugin           "archiver_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.volume.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/index.bytes"
+                plugin           "archiver_index"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "index.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/memory.used"
+                plugin           "archiver_index"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "memory.used"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/time.begin"
+                plugin           "archiver_index"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "time.begin"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/time.end"
+                plugin           "archiver_index"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "time.end"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/values.added"
+                plugin           "archiver_index"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "values.added"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                </meta>
+            </stat>
+            # End Service
+        </stats>
+    </Module>
+</Plugin>

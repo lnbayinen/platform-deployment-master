@@ -1,0 +1,44 @@
+{
+  "builders":
+  [
+    {
+      "type": "qemu",
+      "iso_url": "file:///mnt/buildStorage/linux/centos/6/nw10/iso/6.7/sa-upgrade-10.6.0.0.22075-598-dvd.iso",
+      "iso_checksum": "1e3122d7cfbb9f85fa46588169043b20",
+      "iso_checksum_type": "md5",
+      "output_directory": "/mnt/buildStorage/linux/centos/6/cloud/images/qemu/sa-upgrade-10.6.0.0.22075-598_logdecoder",
+      "shutdown_command": "shutdown -P now",
+      "disk_size": 80000,
+      "format": "qcow2",
+      "headless": false,
+      "accelerator": "kvm",
+      "http_directory": "httpdir",
+      "http_port_min": 10082,
+      "http_port_max": 10089,
+      "ssh_host_port_min": 2222,
+      "ssh_host_port_max": 2229,
+      "ssh_username": "root",
+      "ssh_password": "netwitness",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "900s",
+      "vm_name": "rsa-logdecoder-10.6.0.0.22075-598-x86_64.qcow2.img",
+      "disk_interface": "virtio",
+      "boot_wait": "5s",
+      "qemuargs": [
+       [ "-display", "none" ]
+      ],
+      "boot_command":
+      [
+        "<down><down><enter><down><down><down><down><down><tab>",
+        " OpenStack",
+	"<enter><wait>"
+      ] 
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [ "tpprovision.sh" ]
+    }
+  ]
+} 

@@ -1,0 +1,6 @@
+parameters:
+  private_network: 84331ec5-dd61-427d-86b2-8b2ea4c04b38
+  private_subnet: fcd75777-cfd3-4abe-941d-5bbcee93b292
+  external_network: bcdabc48-bdf7-4efe-8f0b-81b628afee0e
+  key_name: gstopia-master
+  rpm_server: 10.4.51.216

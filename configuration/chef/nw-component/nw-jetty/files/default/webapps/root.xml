@@ -1,0 +1,26 @@
+<Configure id="rootContext" class="org.eclipse.jetty.webapp.WebAppContext">
+
+  <Set name="contextPath">/</Set>
+
+  <Set name="war">
+    <SystemProperty name="jetty.home" default="."/>/webapps/root.war
+  </Set>
+
+  <Call name="setInitParameter">
+    <Arg>com.netwitness.uax.HOME</Arg>
+    <Arg type="java.lang.String">/var/lib/netwitness/uax</Arg>
+  </Call>
+
+  <Call class="java.lang.System" name="setProperty">
+    <Arg>carlos.home</Arg>
+    <Arg>/var/lib/netwitness/uax</Arg>
+  </Call>  
+  
+  <!--
+  <Call name="setInitParameter">
+    <Arg>com.netwitness.spectrum.DB_DIRECTORY</Arg>
+    <Arg type="java.lang.String">/var/lib/pgsql/h2</Arg>
+  </Call>
+  -->
+
+</Configure>

@@ -1,0 +1,20 @@
+---
+- name: '{{ cookbook_name }} : attributes'
+  template:
+    src: 'templates/attributes.j2'
+    dest: '{{ target_dir }}/{{ item[0] }}/attributes/{{ item[1] }}.rb'
+  with_nested:
+    - [ '{{ cookbook_name }}' ]
+    - [ accounts, packages ]
+- name: '{{ cookbook_name }} : attributes/firewall'
+  template:
+    src: 'templates/attr_firewall.rb.j2'
+    dest: '{{ target_dir }}/{{ cookbook_name }}/attributes/firewall.rb'
+- name: '{{ cookbook_name }} : attributes/services'
+  template:
+    src: 'templates/attr_services.rb.j2'
+    dest: '{{ target_dir }}/{{ cookbook_name }}/attributes/services.rb'
+- name: '{{ cookbook_name }} : attributes/groups'
+  template:
+    src: 'templates/attr_groups.rb.j2'
+    dest: '{{ target_dir }}/{{ cookbook_name }}/attributes/groups.rb'

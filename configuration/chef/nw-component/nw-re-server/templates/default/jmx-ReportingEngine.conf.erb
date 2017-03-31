@@ -1,0 +1,893 @@
+# Reporting Engine collectd.conf configuration file
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin "java">
+  <Plugin "GenericJMX">
+
+    ################
+    # MBean blocks #
+    ################
+
+    # Garbage collector information
+    # NAMING CONVENTION = <MBean "<ObjectName:type>">
+    <MBean "GarbageCollector">
+      ObjectName "java.lang:type=GarbageCollector,*"
+      InstancePrefix "GarbageCollector"
+      InstanceFrom "name"
+      <Value>
+        Type "invocations"
+        InstancePrefix "CollectionCount"
+        Table false
+        Attribute "CollectionCount"
+      </Value>
+      <Value>
+        Type "gauge"
+        InstancePrefix "CollectionTime"
+        Table false
+        Attribute "CollectionTime"
+      </Value>
+    </MBean>
+
+    # Generic heap/nonheap memory usage.
+    <MBean "Memory">
+      ObjectName "java.lang:type=Memory"
+      InstancePrefix "Memory"
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-init"
+        Table false
+        Attribute "HeapMemoryUsage.init"
+      </Value>
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-max"
+        Table false
+        Attribute "HeapMemoryUsage.max"
+      </Value>
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-used"
+        Table false
+        Attribute "HeapMemoryUsage.used"
+      </Value>
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-committed"
+        Table false
+        Attribute "HeapMemoryUsage.committed"
+      </Value>
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-init"
+        Table false
+        Attribute "NonHeapMemoryUsage.init"
+      </Value>
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-max"
+        Table false
+        Attribute "NonHeapMemoryUsage.max"
+      </Value>
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-used"
+        Table false
+        Attribute "NonHeapMemoryUsage.used"
+      </Value>
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-committed"
+        Table false
+        Attribute "NonHeapMemoryUsage.committed"
+      </Value>
+    </MBean>
+
+    # Operating System.
+    <MBean "OperatingSystem">
+      ObjectName "java.lang:type=OperatingSystem"
+      InstancePrefix "OperatingSystem"
+      <Value>
+        Type "gauge"
+        InstancePrefix "ProcessCpuLoad"
+        Attribute "ProcessCpuLoad"
+      </Value>
+      <Value>
+        Type "gauge"
+        InstancePrefix "ProcessCpuTime"
+        Attribute "ProcessCpuTime"
+      </Value>
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "CommittedVirtualMemorySize"
+        Attribute "CommittedVirtualMemorySize"
+      </Value>
+      <Value>
+        Type "gauge"
+        InstancePrefix "AvailableProcessors"
+        Attribute "AvailableProcessors"
+      </Value>
+    </MBean>
+
+    #Reporting Services
+    <MBean "RERequestStatistic">
+        ObjectName "com.rsa.soc.re:type=Metrics,subType=RERequestStatistics,id=RERequestStatistics"
+        InstancePrefix "RERequestStatistic"
+    <Value>
+        Type "gauge"
+        InstancePrefix "TotalNumberOfActiveRequests"
+        Attribute "TotalNumberOfActiveRequests"
+    </Value>
+    <Value>
+        Type "gauge"
+        InstancePrefix "TotalNumberOfActiveRequestsTakingMoreThanSecond"
+        Attribute "TotalNumberOfActiveRequestsTakingMoreThanSecond"
+    </Value>
+    <Value>
+        Type "gauge"
+        InstancePrefix "TotalNumberOfActiveRequestsTakingMoreThanMinute"
+        Attribute "TotalNumberOfActiveRequestsTakingMoreThanMinute"
+    </Value>
+    <Value>
+        Type "gauge"
+        InstancePrefix "MaxTimeTakenForRequest"
+        Attribute "MaxTimeTakenForRequest"
+    </Value>
+    <Value>
+        Type "gauge"
+        InstancePrefix "AvgTimeTakenForRequest"
+        Attribute "AvgTimeTakenForRequest"
+    </Value>
+    <Value>
+        Type "gauge"
+        InstancePrefix "NumberOfRequestsReceivedInLastMinute"
+        Attribute "NumberOfRequestsReceivedInLastMinute"
+    </Value>
+    <Value>
+        Type "gauge"
+        InstancePrefix "NumberOfRequestsReceivedInLast10Minutes"
+        Attribute "NumberOfRequestsReceivedInLast10Minutes"
+    </Value>
+    <Value>
+        Type "gauge"
+        InstancePrefix "NumberOfRequestsCompletedInLastMinute"
+        Attribute "NumberOfRequestsCompletedInLastMinute"
+    </Value>
+    <Value>
+        Type "gauge"
+        InstancePrefix "NumberOfRequestsCompletedInLast10Minutes"
+        Attribute "NumberOfRequestsCompletedInLast10Minutes"
+    </Value>
+    <Value>
+        Type "gauge"
+        InstancePrefix "NumberOfRequestsFailedInLastMinute"
+        Attribute "NumberOfRequestsFailedInLastMinute"
+    </Value>
+    <Value>
+        Type "gauge"
+        InstancePrefix "NumberOfRequestsFailedInLast10Minutes"
+        Attribute "NumberOfRequestsFailedInLast10Minutes"
+    </Value>
+    <Value>
+        Type "counter"
+        InstancePrefix "TotalNumberOfRequestsTookLessThanSecond"
+        Attribute "TotalNumberOfRequestsTookLessThanSecond"
+    </Value>
+    <Value>
+        Type "counter"
+        InstancePrefix "TotalNumberOfRequestsTookMoreThanSecond"
+        Attribute "TotalNumberOfRequestsTookMoreThanSecond"
+    </Value>
+    <Value>
+        Type "counter"
+        InstancePrefix "TotalNumberOfRequestsTookMoreThanMinute"
+        Attribute "TotalNumberOfRequestsTookMoreThanMinute"
+    </Value>
+    <Value>
+        Type "counter"
+        InstancePrefix "TotalNumberOfRequestsReceived"
+        Attribute "TotalNumberOfRequestsReceived"
+    </Value>
+    <Value>
+        Type "counter"
+        InstancePrefix "TotalNumberOfRequestsCompleted"
+        Attribute "TotalNumberOfRequestsCompleted"
+    </Value>
+    <Value>
+        Type "counter"
+        InstancePrefix "TotalNumberOfRequestsFailed"
+        Attribute "TotalNumberOfRequestsFailed"
+    </Value>
+    </MBean>
+
+    <MBean "DiskSpaceStats">
+        ObjectName "com.rsa.soc.re:type=Metrics,subType=DiskSpaceStats,id=diskSpaceStatistics"
+        InstancePrefix "DiskSpaceStats"
+    <Value>
+        Type "bytes"
+        InstancePrefix "TotalDiskSpace"
+        Attribute "TotalDiskSpace"
+    </Value>
+    <Value>
+        Type "bytes"
+        InstancePrefix "UsedDiskSpace"
+        Attribute "UsedDiskSpace"
+    </Value>
+    <Value>
+        Type "bytes"
+        InstancePrefix "FreeDiskSpace"
+        Attribute "FreeDiskSpace"
+    </Value>
+    <Value>
+        Type "percent"
+        InstancePrefix "FreeDiskSpacePercentage"
+        Attribute "FreeDiskSpacePercentage"
+    </Value>
+    </MBean>
+
+    <MBean "ZipResultStoreStats">
+        ObjectName "com.rsa.soc.re:type=Metrics,subType=ZipResultStoreStats,id=zipResultStoreStats"
+        InstancePrefix "ZipResultStoreStats"
+    <Value>
+        Type "counter"
+        InstancePrefix "ResultStoresCreated"
+        Attribute "ResultStoresCreated"
+    </Value>
+    <Value>
+        Type "counter"
+        InstancePrefix "ResultStoresDeleted"
+        Attribute "ResultStoresDeleted"
+    </Value>
+    <Value>
+        Type "counter"
+        InstancePrefix "ResultStoresClosed"
+        Attribute "ResultStoresClosed"
+    </Value>
+    <Value>
+        Type "counter"
+        InstancePrefix "ResultsAdded"
+        Attribute "ResultsAdded"
+    </Value>
+    <Value>
+        Type "counter"
+        InstancePrefix "ResultsFetched"
+        Attribute "ResultsFetched"
+    </Value>
+    </MBean>
+
+    <MBean "AlertStatistics">
+        ObjectName "com.rsa.soc.re:type=Metrics,subType=AlertStatistics,id=alertStatistics"
+        InstancePrefix "alertStatistics"
+    <Value>
+            Type "counter"
+            InstancePrefix "NumberOfEnabledAlerts"
+            Attribute "NumberOfEnabledAlerts"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfRunningAlerts"
+            Attribute "NumberOfRunningAlerts"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "NumberOfAlertsRunningMoreThanMinute"
+            Attribute "NumberOfAlertsRunningMoreThanMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfAlertExecutionCompletedInLastMinute"
+            Attribute "NumberOfAlertExecutionCompletedInLastMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfAlertExecutionCompletedInLast10Minutes"
+            Attribute "NumberOfAlertExecutionCompletedInLast10Minutes"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfAlertExecutionFailedInLastMinute"
+            Attribute "NumberOfAlertExecutionFailedInLastMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfAlertExecutionFailedInLast10Minutes"
+            Attribute "NumberOfAlertExecutionFailedInLast10Minutes"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfAlertExecutionCancelledInLastMinute"
+            Attribute "NumberOfAlertExecutionCancelledInLastMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfAlertExecutionCancelledInLast10Minutes"
+            Attribute "NumberOfAlertExecutionCancelledInLast10Minutes"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfAlertExecutionsCompleted"
+            Attribute "TotalNumberOfAlertExecutionsCompleted"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfAlertExecutionsFailed"
+            Attribute "TotalNumberOfAlertExecutionsFailed"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "TotalNumberOfAlertExecutionsTookLessThanSecond"
+            Attribute "TotalNumberOfAlertExecutionsTookLessThanSecond"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "TotalNumberOfAlertExecutionsTookMoreThanSecond"
+            Attribute "TotalNumberOfAlertExecutionsTookMoreThanSecond"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "TotalNumberOfAlertExecutionsTookMoreThanMinute"
+            Attribute "TotalNumberOfAlertExecutionsTookMoreThanMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "AvgTimeTakenForAlertExecution"
+            Attribute "AvgTimeTakenForAlertExecution"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "MaxTimeTakenForAlertExecution"
+            Attribute "MaxTimeTakenForAlertExecution"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "AvgRowsFetchedForAlerts"
+            Attribute "AvgRowsFetchedForAlerts"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "MaxRowsFetchedForAlerts"
+            Attribute "MaxRowsFetchedForAlerts"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsRunning"
+            Attribute "NumberOfOAsRunning"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsCompletedInLastMinute"
+            Attribute "NumberOfOAsCompletedInLastMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsCompletedInLast10Minutes"
+            Attribute "NumberOfOAsCompletedInLast10Minutes"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsFailedInLast10Minutes"
+            Attribute "NumberOfOAsFailedInLast10Minutes"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsFailedInLastMinute"
+            Attribute "NumberOfOAsFailedInLastMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfAlertExecutionSkippedInLastMinute"
+            Attribute "NumberOfAlertExecutionSkippedInLastMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfAlertExecutionSkippedInLast10Minutes"
+            Attribute "NumberOfAlertExecutionSkippedInLast10Minutes"
+    </Value>
+    </MBean>
+
+    <MBean "ChartStatusHandler">
+        ObjectName "com.rsa.soc.re:type=Metrics,subType=ChartStatusHandler,id=chartStatusHandler"
+        InstancePrefix "chartStatusHandler"
+        <Value>
+            Type "gauge"
+            InstancePrefix "AvgRowsFetchedForCharts"
+            Attribute "AvgRowsFetchedForCharts"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "AvgTimeTakenForChartExecution"
+            Attribute "AvgTimeTakenForChartExecution"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "MaxRowsFetchedForCharts"
+            Attribute "MaxRowsFetchedForCharts"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "MaxTimeTakenForChartExecution"
+            Attribute "MaxTimeTakenForChartExecution"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfChartExecutionCancelledInLast10Minutes"
+            Attribute "NumberOfChartExecutionCancelledInLast10Minutes"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfChartExecutionCancelledInLastMinute"
+            Attribute "NumberOfChartExecutionCancelledInLastMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfChartExecutionCompletedInLast10Minutes"
+            Attribute "NumberOfChartExecutionCompletedInLast10Minutes"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfChartExecutionCompletedInLastMinute"
+            Attribute "NumberOfChartExecutionCompletedInLastMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfChartExecutionFailedInLast10Minutes"
+            Attribute "NumberOfChartExecutionFailedInLast10Minutes"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfChartExecutionFailedInLastMinute"
+            Attribute "NumberOfChartExecutionFailedInLastMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfChartsRunningMoreThanMinute"
+            Attribute "NumberOfChartsRunningMoreThanMinute"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfEnabledCharts"
+            Attribute "NumberOfEnabledCharts"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfRunningCharts"
+            Attribute "NumberOfRunningCharts"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfChartExecutionsCompleted"
+            Attribute "TotalNumberOfChartExecutionsCompleted"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfChartExecutionsFailed"
+            Attribute "TotalNumberOfChartExecutionsFailed"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfChartExecutionsTookLessThanSecond"
+            Attribute "TotalNumberOfChartExecutionsTookLessThanSecond"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfChartExecutionsTookMoreThanMinute"
+            Attribute "TotalNumberOfChartExecutionsTookMoreThanMinute"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfChartExecutionsTookMoreThanSecond"
+            Attribute "TotalNumberOfChartExecutionsTookMoreThanSecond"
+    </Value>
+    <Value>
+            Type "gauge"
+            Table true
+            InstancePrefix "NumberOfChartsRunningByDataSource-"
+            Attribute "NumberOfChartsRunningByDataSource"
+            <DataHandler "com.rsa.netwitness.sms.jmx.SMSJmxDataHandler">
+                <Stat>
+                    <Meta>
+                      name "Number of charts running by dataSource"
+                      description "Number of charts executions by data source"
+                      category "Chart"
+                    </Meta>
+                </Stat>
+            </DataHandler>
+        </Value>
+    </MBean>
+
+    <MBean "QueryExecutionStatistics">
+        ObjectName "com.rsa.soc.re:type=Metrics,subType=QueryExecutionStatistics,id=queryExecutionStatistics"
+        InstancePrefix "QueryExecutionStatistics"
+        <Value>
+            Type "gauge"
+            InstancePrefix "ActiveRuleExecutions"
+            Attribute "ActiveRuleExecutions"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "AvgIterationsPerRule"
+            Attribute "AvgIterationsPerRule"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "AvgRowsFetched"
+            Attribute "AvgRowsFetched"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "AvgRuleExecutionTime"
+            Attribute "AvgRuleExecutionTime"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "MaxIterationsPerRule"
+            Attribute "MaxIterationsPerRule"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "MaxRowsFetched"
+            Attribute "MaxRowsFetched"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "MaxRuleExecutionTime"
+            Attribute "MaxRuleExecutionTime"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfCancelledRuleExecutions"
+            Attribute "TotalNumberOfCancelledRuleExecutions"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfCompletedRuleExecutions"
+            Attribute "TotalNumberOfCompletedRuleExecutions"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfFailedRuleExecutions"
+            Attribute "TotalNumberOfFailedRuleExecutions"
+    </Value>
+    <Value>
+            Type "counter"
+            InstancePrefix "TotalNumberOfRuleExecutions"
+            Attribute "TotalNumberOfRuleExecutions"
+    </Value>
+    </MBean>
+
+    <MBean "ReportStatistics">
+        ObjectName "com.rsa.soc.re:type=Metrics,subType=ReportStatistics,id=reportStatistics"
+        InstancePrefix "ReportStatistics"
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfFormattingCompletedInLast5Mins"
+            Attribute "NumberOfFormattingCompletedInLast5Mins"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfFormattingCompletedInLastHour"
+            Attribute "NumberOfFormattingCompletedInLastHour"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfFormattingFailedInLast5Mins"
+            Attribute "NumberOfFormattingFailedInLast5Mins"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfFormattingFailedInLastHour"
+            Attribute "NumberOfFormattingFailedInLastHour"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfFormattingQueued"
+            Attribute "NumberOfFormattingQueued"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfFormattingRunning"
+            Attribute "NumberOfFormattingRunning"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfFormattingsRunningMoreThan1Min"
+            Attribute "NumberOfFormattingsRunningMoreThan1Min"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsCompletedInLast5Mins"
+            Attribute "NumberOfOAsCompletedInLast5Mins"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsCompletedInLastHour"
+            Attribute "NumberOfOAsCompletedInLastHour"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsFailedInLast5Mins"
+            Attribute "NumberOfOAsFailedInLast5Mins"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsFailedInLastHour"
+            Attribute "NumberOfOAsFailedInLastHour"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsQueued"
+            Attribute "NumberOfOAsQueued"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsRunning"
+            Attribute "NumberOfOAsRunning"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfOAsRunningMoreThan1Min"
+            Attribute "NumberOfOAsRunningMoreThan1Min"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfReportsCancelledInLast5Mins"
+            Attribute "NumberOfReportsCancelledInLast5Mins"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfReportsCancelledInLastHour"
+            Attribute "NumberOfReportsCancelledInLastHour"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfReportsCompletedInLast5Mins"
+            Attribute "NumberOfReportsCompletedInLast5Mins"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfReportsCompletedInLastHour"
+            Attribute "NumberOfReportsCompletedInLastHour"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfReportsFailedInLast5Mins"
+            Attribute "NumberOfReportsFailedInLast5Mins"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfReportsFailedInLastHour"
+            Attribute "NumberOfReportsFailedInLastHour"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfReportsRunning"
+            Attribute "NumberOfReportsRunning"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfReportsRunningMoreThan1Hour"
+            Attribute "NumberOfReportsRunningMoreThan1Hour"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfRulesCompletedInLast5Mins"
+            Attribute "NumberOfRulesCompletedInLast5Mins"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfRulesCompletedInLastHour"
+            Attribute "NumberOfRulesCompletedInLastHour"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfRulesFailedInLast5Mins"
+            Attribute "NumberOfRulesFailedInLast5Mins"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfRulesFailedInLastHour"
+            Attribute "NumberOfRulesFailedInLastHour"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfRulesQueued"
+            Attribute "NumberOfRulesQueued"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfRulesRunning"
+            Attribute "NumberOfRulesRunning"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfRulesRunningMoreThan1Min"
+            Attribute "NumberOfRulesRunningMoreThan1Min"
+    </Value>
+    <Value>
+            Type "gauge"
+            InstancePrefix "NumberOfRulesRunningMoreThan30Mins"
+            Attribute "NumberOfRulesRunningMoreThan30Mins"
+    </Value>
+     <Value>
+            Type "gauge"
+            Table true
+            InstancePrefix "CompletedRulesCountInLastHourByDataSource-"
+            Attribute "CompletedRulesCountInLastHourByDataSource"
+            <DataHandler "com.rsa.netwitness.sms.jmx.SMSJmxDataHandler">
+                <Stat>
+                    <Meta>
+                      name "Number of Rules Completed In Last Hour By Data Source"
+                      description "Number of Rules Completed In Last Hour By Data Source"
+                      category "ReportStatistics"
+                    </Meta>
+                </Stat>
+            </DataHandler>
+        </Value>
+        <Value>
+            Type "gauge"
+            Table true
+            InstancePrefix "FailedRulesCountInLastHourByDataSource-"
+            Attribute "FailedRulesCountInLastHourByDataSource"
+            <DataHandler "com.rsa.netwitness.sms.jmx.SMSJmxDataHandler">
+                <Stat>
+                    <Meta>
+                      name "Number of  rules Failed In Last Hour By Data Source"
+                      description "Number of  rules Failed In Last Hour By Data Source"
+                      category "ReportStatistics"
+                    </Meta>
+                </Stat>
+            </DataHandler>
+        </Value>
+      <Value>
+            Type "gauge"
+            Table true
+            InstancePrefix "NumberOfRulesRunningMoreThan30MinsByDataSource-"
+            Attribute "NumberOfRulesRunningMoreThan30MinsByDataSource"
+            <DataHandler "com.rsa.netwitness.sms.jmx.SMSJmxDataHandler">
+                <Stat>
+                    <Meta>
+                      name "Number Of Rules Running More Than 30 Mins By Data Source"
+                      description "Number Of Rules Running More Than 30 Mins By Data Source"
+                      category "ReportStatistics"
+                    </Meta>
+                </Stat>
+            </DataHandler>
+        </Value>
+         <Value>
+            Type "gauge"
+            Table true
+            InstancePrefix "QueuedRulesCountByDataSource-"
+            Attribute "QueuedRulesCountByDataSource"
+            <DataHandler "com.rsa.netwitness.sms.jmx.SMSJmxDataHandler">
+                <Stat>
+                    <Meta>
+                      name "Queued Rules Count By Data Source"
+                      description "Number of Rules Queued By Data Source"
+                      category "ReportStatistics"
+                    </Meta>
+                </Stat>
+            </DataHandler>
+        </Value>
+       <Value>
+            Type "gauge"
+            Table true
+            InstancePrefix "RunningRulesCountByDataSource-"
+            Attribute "RunningRulesCountByDataSource"
+            <DataHandler "com.rsa.netwitness.sms.jmx.SMSJmxDataHandler">
+                <Stat>
+                    <Meta>
+                      name "Running Rules Count By Data Source"
+                      description "Running Rules Count By Data Source"
+                      category "ReportStatistics"
+                    </Meta>
+                </Stat>
+            </DataHandler>
+        </Value>
+    </MBean>
+
+    <MBean "HealthStatistics">
+        ObjectName "com.rsa.soc.re:id=healthStatistics,subType=HealthStatistics,type=Metrics"
+        InstancePrefix "HealthStatistics"
+        <Value>
+            Type "gauge"
+            Table true
+            Attribute "DataSourceHealthStats"
+            <DataHandler "com.rsa.netwitness.sms.jmx.REJmxDataHandler">
+                <Stat>
+                    <Meta>
+                      category "HealthStatistics"
+                    </Meta>
+                </Stat>
+            </DataHandler>
+        </Value>
+        <Value>
+            Type "gauge"
+            Table true
+            InstancePrefix "REHealthStats-"
+            Attribute "REHealthStats"
+            <DataHandler "com.rsa.netwitness.sms.jmx.SMSJmxDataHandler">
+                <Stat "ScheduledTasksPool-AverageExecutionTime">
+                    <Meta>
+                      name "Schedule Task Pool Average Execution Time"
+                      category "HealthStatistics"
+                      description "Schedule Task Pool Average Execution Time"
+                    </Meta>
+                </Stat>
+                 <Stat "ScheduledTasksPool-Queued">
+                    <Meta>
+                      name "Schedule Task Pool Queued"
+                      category "HealthStatistics"
+                      description "Number of pending tasks waiting in queue to be executed"
+                    </Meta>
+                </Stat>
+                <Stat "ScheduledTasksPool-Running">
+                    <Meta>
+                      name "Schedule Task Pool Running"
+                      category "HealthStatistics"
+                      description "Number of running RE tasks such as formatting tasks and output actions"
+                    </Meta>
+                </Stat>
+                <Stat "ScheduledTasksPool-Utilization">
+                    <Meta>
+                      name "Schedule Task Pool Utilization"
+                      category "HealthStatistics"
+                      description "Score (0-10), indicator of how busy RE is in executing tasks like formatting, output actions and other tasks"
+                    </Meta>
+                </Stat>
+
+                #SharedTasksPool
+                <Stat "SharedTasksPool-AverageExecutionTime">
+                    <Meta>
+                      name "Shared Task Pool Average Execution Time"
+                      category "HealthStatistics"
+                      description "Shared Task Pool Average Execution Time"
+                    </Meta>
+                </Stat>
+                 <Stat "SharedTasksPool-Queued">
+                    <Meta>
+                      name "Shared Task Pool Queued"
+                      category "HealthStatistics"
+                      description "Number of pending tasks waiting in queue to be executed"
+                    </Meta>
+                </Stat>
+                <Stat "SharedTasksPool-Running">
+                    <Meta>
+                      name "Shared Task Pool Running"
+                      category "HealthStatistics"
+                      description "Number of running scheduled tasks like clean-up of expired results"
+                    </Meta>
+                </Stat>
+                <Stat "SharedTasksPool-Utilization">
+                    <Meta>
+                      name "Shared Task Pool Utilization"
+                      category "HealthStatistics"
+                      description "Score (0-10), indicator of how busy RE is in executing scheduled tasks, relative to the capacity and number of waiting tasks"
+                    </Meta>
+                </Stat>
+            </DataHandler>
+        </Value>
+    </MBean>
+
+    #####################
+    # Connection block  #
+    #####################
+    <Connection>
+      Host "<%= @node_uuid %>"
+      ServiceURL "service:jmx:rmi:///jndi/rmi://localhost:50011/carlos"
+      # NAMING CONVENTION = InstancePrefix "<componentId>_jmx-"
+      InstancePrefix "reportingengine_jmx-"
+      Collect "GarbageCollector"
+      Collect "Memory"
+      Collect "OperatingSystem"
+      Collect "RERequestStatistic"
+      Collect "DiskSpaceStats"
+      Collect "ZipResultStoreStats"
+      Collect "AlertStatistics"
+      Collect "ChartStatusHandler"
+      Collect "QueryExecutionStatistics"
+      Collect "ReportStatistics"
+      Collect "HealthStatistics"
+    </Connection>
+  </Plugin>
+</Plugin>

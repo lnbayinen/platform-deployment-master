@@ -1,0 +1,16 @@
+rsa:
+  orchestration:
+    engine:
+      salt:
+        component:
+          chef-config-location: "/opt/rsa/platform/nw-chef/client.rb"
+          chef-run-list-location: "/opt/rsa/platform/nw-chef/node.json"
+          use-stable-package-versions: "false"
+        client:
+          username: "nwsaltuser"
+          password: "netwitness"
+          host-verification-enabled: "false"
+          certificate-verification-enabled: "false"
+    host:
+      config:
+        yum-repo-url: "<%= @repourl %>"

@@ -1,0 +1,259 @@
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin generic_cpp>
+    PluginModulePath "/usr/lib64/collectd"
+
+    <Module "NgNativeReader" "NwWarehouseConnector-FastUpdate">
+        port      "56020"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "10"
+
+        <stats>
+            <stat>
+                path             "/sys/stats/service.status"
+                plugin           "warehouseconnector_sys"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "service.status"
+                <meta>
+                    name         "Service State"
+                    description  "%description%"
+                    category     "ProcessInfo"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/stats/working.rate"
+                plugin           "warehouseconnector_stats"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "working.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    path         "%path%"
+                </meta>
+            </stat>
+        </stats>
+    </Module>
+
+    <Module "NgNativeReader" "NwWarehouseConnector-NormalUpdate">
+        port      "56020"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "60"
+
+        <stats>
+            # Begin Service
+            <stat>
+                path             "/warehouseconnector/stats/streams.complete"
+                plugin           "warehouseconnector_stats"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "streams.complete"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/stats/streams.incomplete"
+                plugin           "warehouseconnector_stats"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "streams.incomplete"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/stats/streams.running"
+                plugin           "warehouseconnector_stats"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "streams.running"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/stats/streams.stopped"
+                plugin           "warehouseconnector_stats"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "streams.stopped"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/stats/streams.total"
+                plugin           "warehouseconnector_stats"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "streams.total"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/streams/<.*>/loader/stats/active.jobs"
+                plugin           "warehouseconnector_streams"
+                plugin_instance  "%1%"
+                type             "gauge"
+                type_instance    "active.jobs"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/streams/<.*>/loader/stats/session.rate"
+                plugin           "warehouseconnector_streams"
+                plugin_instance  "%1%"
+                type             "gauge"
+                type_instance    "session.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/streams/<.*>/loader/stats/working.rate"
+                plugin           "warehouseconnector_streams"
+                plugin_instance  "%1%"
+                type             "gauge"
+                type_instance    "working.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/streams/<.*>/loader/stats/unprocessed.sessions"
+                plugin           "warehouseconnector_streams"
+                plugin_instance  "%1%"
+                type             "gauge"
+                type_instance    "unprocessed.sessions"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/streams/<.*>/stats/disk.usage"
+                plugin           "warehouseconnector_streams"
+                plugin_instance  "%1%"
+                type             "gauge"
+                type_instance    "disk.usage"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/streams/<.*>/stats/permrejected.number"
+                plugin           "warehouseconnector_streams"
+                plugin_instance  "%1%"
+                type             "gauge"
+                type_instance    "permrejected.number"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/streams/<.*>/stats/rejected.usage"
+                plugin           "warehouseconnector_streams"
+                plugin_instance  "%1%"
+                type             "gauge"
+                type_instance    "rejected.usage"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Streams"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/streams/<.*>/stats/<.*.behind>/"
+                plugin           "warehouseconnector_streams"
+                plugin_instance  "%1%"
+                type             "gauge"
+                type_instance    "%2%"
+                <meta>
+                    name         "Stream Behind"
+                    description  "%description%"
+                    category     "Streams"
+                    subitem      "%1%/%2%"
+                    path         "%path%"
+                    p1           "%1%"
+                    p2           "%2%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/warehouseconnector/streams/<.*>/stats/<.*.status>/"
+                plugin           "warehouseconnector_streams"
+                plugin_instance  "%1%"
+                type             "string"
+                type_instance    "%2%"
+                <meta>
+                    name         "Stream Status"
+                    description  "%description%"
+                    category     "Streams"
+                    subitem      "%1%/%2%"
+                    path         "%path%"
+                    p1           "%1%"
+                    p2           "%2%"
+                </meta>
+            </stat>
+            # End Service
+        </stats>
+    </Module>
+</Plugin>

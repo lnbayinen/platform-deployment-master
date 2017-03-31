@@ -1,0 +1,6 @@
+[cookbooks]
+#nw-archiver ansible_connection=local cookbook_name=nw-archiver
+#nw-broker ansible_connection=local cookbook_name=nw-broker
+#nw-concentrator ansible_connection=local cookbook_name=nw-concentrator
+#nw-decoder ansible_connection=local cookbook_name=nw-decoder
+foobar-bazquux ansible_connection=local cookbook_name=foobar-bazquux

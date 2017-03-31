@@ -1,0 +1,1 @@
+default['nw-rabbitmq']['accounts'] = []

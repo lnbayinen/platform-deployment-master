@@ -1,0 +1,88 @@
+DEPENDENCIES
+  nw-archiver
+    path: nw-archiver
+  nw-base
+    path: nw-base
+  nw-broker
+    path: nw-broker
+  nw-concentrator
+    path: nw-concentrator
+  nw-decoder
+    path: nw-decoder
+  nw-event-stream-analysis
+    path: nw-event-stream-analysis
+  nw-log-collector
+    path: nw-log-collector
+  nw-log-decoder
+    path: nw-log-decoder
+  nw-malware-analysis
+    path: nw-malware-analysis
+  nw-repositories
+    path: nw-repositories
+  nw-server
+    path: nw-server
+  rsa-admin-server
+    path: rsa-admin-server
+  rsa-cms-server
+    path: rsa-cms-server
+  rsa-config-server
+    path: rsa-config-server
+  rsa-contexthub
+    path: rsa-contexthub
+  rsa-esa-analytics-server
+    path: rsa-esa-analytics-server
+  rsa-investigate
+    path: rsa-investigate
+  rsa-orchestration-server
+    path: rsa-orchestration-server
+  rsa-response
+    path: rsa-response
+  rsa-security-server
+    path: rsa-security-server
+
+GRAPH
+  chef-sugar (3.4.0)
+  firewall (2.5.2)
+    chef-sugar (>= 0.0.0)
+  nw-archiver (0.1.0)
+    nw-base (= 0.1.0)
+  nw-base (0.1.0)
+    firewall (~> 2.5.2)
+    nw-repositories (= 0.1.0)
+  nw-broker (0.1.0)
+    nw-base (= 0.1.0)
+  nw-concentrator (0.1.0)
+    nw-base (= 0.1.0)
+  nw-decoder (0.1.0)
+    nw-base (= 0.1.0)
+  nw-event-stream-analysis (0.1.0)
+    nw-base (= 0.1.0)
+  nw-log-collector (0.1.0)
+    nw-base (= 0.1.0)
+  nw-log-decoder (0.1.0)
+    nw-base (= 0.1.0)
+  nw-malware-analysis (0.1.0)
+    nw-base (= 0.1.0)
+  nw-repositories (0.1.0)
+    yum (>= 0.0.0)
+  nw-server (0.1.0)
+    nw-base (= 0.1.0)
+  rsa-admin-server (0.1.0)
+    nw-base (= 0.1.0)
+  rsa-cms-server (0.1.0)
+    nw-base (= 0.1.0)
+  rsa-config-server (0.1.0)
+    nw-base (= 0.1.0)
+  rsa-contexthub (0.1.0)
+    nw-base (= 0.1.0)
+  rsa-esa-analytics-server (0.1.0)
+    nw-base (= 0.1.0)
+  rsa-investigate (0.1.0)
+    nw-base (= 0.1.0)
+  rsa-orchestration-server (0.1.0)
+    nw-base (= 0.1.0)
+  rsa-response (0.1.0)
+    nw-base (= 0.1.0)
+  rsa-security-server (0.1.0)
+    nw-base (= 0.1.0)
+  yum (3.12.0)

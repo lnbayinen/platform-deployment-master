@@ -1,0 +1,15 @@
+#
+# Cookbook Name:: {{ cookbook_name }}
+# Recipe:: packages
+#
+# Copyright (C) 2016 RSA Security
+#
+# All rights reserved - Do Not Redistribute
+#
+
+node['{{ cookbook_name }}']['packages'].each do |pkg|
+  package pkg['name'] do
+    version pkg['version']
+    action :install
+  end
+end

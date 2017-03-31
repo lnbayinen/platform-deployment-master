@@ -1,0 +1,20 @@
+require_relative '../spec_helper.rb'
+
+describe '{{ cookbook_name }}::services' do
+  let(:chef_run) do
+    ChefSpec::SoloRunner.new(platform: 'centos', version: '7.2.1511') do |node|
+      node.normal['{{ cookbook_name }}']['service_names'] = %w(
+        {{ cookbook_name }}
+      )
+    end.converge(described_recipe)
+  end
+
+  it 'starts and enables the {{ cookbook_name }} service' do
+    expect(chef_run).to enable_service('{{ cookbook_name }}')
+    expect(chef_run).to start_service('{{ cookbook_name }}')
+    expect(chef_run).not_to disable_service('{{ cookbook_name }}')
+    expect(chef_run).not_to stop_service('{{ cookbook_name }}')
+    expect(chef_run).not_to restart_service('{{ cookbook_name }}')
+    expect(chef_run).not_to reload_service('{{ cookbook_name }}')
+  end
+end

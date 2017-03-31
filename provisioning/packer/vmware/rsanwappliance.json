@@ -1,0 +1,56 @@
+{
+  "builders":
+  [
+    {
+      "type": "vmware-iso",
+      "remote_type": "esx5",
+      "remote_host": "10.101.45.14",
+      "remote_username": "svc_asoc",
+      "remote_password": "As0c123$",
+      "remote_datastore": "REDC2-CLUS1-LUN01",
+      "remote_cache_directory": "packer_cache3",
+      "format": "ova",
+      "guest_os_type": "rhel7-64",
+      "iso_url": "file:///mnt/buildStorage/linux/6/nw10/iso/6.7/sa-upgrade-11.0.0.0-160605125437.1.1553760107-dvd.iso",
+      "iso_checksum": "e7c8b3a08a214c7701833d3455ab3751",
+      "iso_checksum_type": "md5",
+      "output_directory": "sa-upgrade-11.0.0.0-160605125437.1.1553760107_nwappliance",
+      "shutdown_command": "shutdown -P now",
+      "disk_size": 80000,
+      "headless": false,
+      "http_directory": "httpdir",
+      "http_port_min": 10082,
+      "http_port_max": 10089,
+      "ssh_username": "root",
+      "ssh_password": "netwitness",
+      "ssh_port": 22,
+      "ssh_host": "10.101.34.50",
+      "ssh_wait_timeout": "1800s",
+      "vm_name": "nwappliance-",
+      "boot_wait": "5s",
+      "boot_command":
+      [
+        "<tab> text inst.ks=cdrom:/ova.ks net.ifnames=0 biosdevname=0 <enter>",
+	"<wait15s>",
+	"<esc>"
+      ],
+       "vmx_data": {
+         "memsize": "32768",
+         "numvcpus": "4",
+         "ethernet0.virtualdev": "vmxnet3", 
+         "ethernet0.present": "TRUE",
+         "ethernet0.networkName": "VM Network 134",
+         "scsi0.present": "TRUE",
+         "scsi0.sharedBus": "none",
+         "scsi0.virtualDev": "pvscsi"
+     }
+
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [ "provision.sh" ]
+    }
+  ]
+} 

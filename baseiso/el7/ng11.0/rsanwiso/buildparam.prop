@@ -1,0 +1,13 @@
+CODEVERSION=ng11.0
+CODEPATH=${WORKSPACE}/baseiso/el7/${CODEVERSION}/rsanwiso
+CENTOSISO=CentOS-7-x86_64-DVD-1511.iso
+DVDISODIR=dvdiso
+USBISODIR=usbiso
+BOOTISODIR=bootiso
+BUILDBINURL=https://libhq-ro.rsa.lab.emc.com/SA/tools/Platform
+MEGACLIRPM=CmdTool2-8.07.16-1.noarch.rpm
+RSAREPO=/opt/buildStorage/repo/RSA/11.0.0
+BOOTSTRAPREPO=/opt/buildStorage/repo/bootstrap/11.0
+KEYSREPO=/opt/buildStorage/repo/bootstrap/keys
+ISONAMESTR=rsa-11.0.0.0
+ARTIFACTPOST=/opt/buildStorage/artifacts/${TAG}/iso

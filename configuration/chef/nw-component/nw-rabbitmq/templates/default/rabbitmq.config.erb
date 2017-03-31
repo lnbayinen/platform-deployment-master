@@ -1,0 +1,71 @@
+%%%%%%
+%% NOTICE
+%%
+%% This file is managed by automated processes, and contains no user
+%% serviceable parts.
+%%
+%% Do not modify!
+%%%%%%
+
+[
+  {rabbit, [
+    {auth_mechanisms, ['PLAIN', 'EXTERNAL']},
+    %% Unrestrict the guest account
+    {loopback_users, []},
+<% if @certfile %>
+    {tcp_listeners, [<%= @amqp_port %>]},
+    {ssl_listeners, [<%= @amqps_port %>]},
+    {ssl_cert_login_from,  common_name},
+    {ssl_options, [
+      {cacertfile,           "<%= @cacertfile %>"},
+      {certfile,             "<%= @certfile %>"},
+      {keyfile,              "<%= @keyfile %>"},
+      {verify,               verify_peer},
+      {fail_if_no_peer_cert, true}<% unless @ciphers.empty? %>,
+      {ciphers,              [
+        <%= @ciphers.join(', ') %>
+      ]}<% end %><% unless @tls_vers.empty? %>,
+      %% Restrict available versions of SSL/TLS for security
+      {versions, [<%= @tls_vers.map { |v| "'#{v}'" }.join(', ') %>]}
+      <% end %>
+    ]}
+<% else %>
+    {tcp_listeners, [<%= @amqp_port %>]}
+<% end %>
+  ]},
+  {rabbitmq_management, [
+    {listener, [
+<% if @certfile %>
+      {ssl, true},
+      {ssl_opts, [
+        {cacertfile, "<%= @cacertfile %>"},
+        {certfile,   "<%= @certfile %>"},
+        {keyfile,    "<%= @keyfile %>"}
+      ]},
+<% end %>
+      {port, <%= @mgmt_port %>}
+    ]}
+  ]}<% if @certfile %>,
+  %% Configures TLS use for any AMQP clients within RabbitMQ,
+  %% e.g. fedration or shovels.
+  {amqp_client, [
+    {ssl_options, [
+      {cacertfile,           "<%= @cacertfile %>"},
+      {certfile,             "<%= @certfile %>"},
+      {keyfile,              "<%= @keyfile %>"},
+      {verify,               verify_peer},
+      {fail_if_no_peer_cert, true}<% unless @ciphers.empty? %>,
+      {ciphers,              [
+        <%= @ciphers.join(', ') %>
+      ]}<% end %><% unless @tls_vers.empty? %>,
+      %% Restrict available versions of SSL/TLS for security
+      {versions, [<%= @tls_vers.map { |v| "'#{v}'" }.join(', ') %>]}
+      <% end %>
+    ]}
+  ]}<% unless @tls_vers.empty? %>,
+  %% Restrict available versions of SSL/TLS for security
+  {ssl, [
+    {versions, [<%= @tls_vers.map { |v| "'#{v}'" }.join(', ') %>]}
+  ]}
+<% end %><% end %>
+].

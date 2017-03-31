@@ -1,0 +1,15 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.hostname = "cloud-dev"
+  config.vm.synced_folder ".", "/vagrant_data"
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "512"
+  end
+  config.vm.provision "shell", inline: "apt-get update"
+  config.vm.provision "shell", inline: "apt install -y cloud-image-utils"
+  config.vm.provision "shell", inline: "cd /vagrant_data/cloud-configs ; /usr/bin/write-mime-multipart -o /vagrant_data/salt_master_config.multipart host_config.yaml salt_master_install.sh:text/x-shellscript"
+  config.vm.provision "shell", inline: "cd /vagrant_data/cloud-configs ; /usr/bin/write-mime-multipart -o /vagrant_data/salt_minion_config.multipart host_config.yaml salt_minion_install.sh:text/x-shellscript"
+end

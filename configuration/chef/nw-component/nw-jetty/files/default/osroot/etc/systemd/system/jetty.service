@@ -1,0 +1,20 @@
+[Unit]
+Description=Jetty Web Server
+After=syslog.target network.target rabbitmq-server.service mongod.service
+Wants=network.target
+
+[Service]
+Type=forking
+User=root
+Group=root
+Environment="JETTY_RUN=/var/run"
+PIDFile=/var/run/jetty.pid
+PermissionsStartOnly=true
+ExecStartPre=/usr/bin/mkdir -p /var/lib/netwitness/uax/logs
+ExecStart=/opt/rsa/jetty9/bin/jetty.sh start
+ExecStop=/opt/rsa/jetty9/bin/jetty.sh stop
+TimeoutSec=1800
+
+[Install]
+WantedBy=multi-user.target
+

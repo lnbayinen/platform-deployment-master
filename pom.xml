@@ -1,0 +1,24 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <name>Platform-Deployment :: Repository Root POM</name>
+
+    <parent>
+        <artifactId>rpm-builder</artifactId>
+        <groupId>com.rsa.asoc.platform.rpm</groupId>
+        <version>0.2.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>platform-deployment-root-pom</artifactId>
+    <groupId>com.rsa.asoc.platform</groupId>
+    <version>0.1.0-SNAPSHOT</version>
+
+    <repositories>
+    <!-- ASOC Tier-2 repository -->
+        <repository>
+            <id>repo1.rsa.lab.emc.com-build</id>
+            <url>http://repo1.rsa.lab.emc.com:8081/artifactory/asoc-build-repo</url>
+        </repository>
+    </repositories>
+</project>
+

@@ -1,0 +1,29 @@
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin generic_cpp>
+    PluginModulePath "/usr/lib64/collectd"
+
+    <Module "NgEsmReader" "all">
+        port      "56002"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "600"
+        query     "all"
+        <stats>
+        </stats>
+    </Module>
+
+    <Module "NgEsmReader" "update">
+        port      "56002"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "60"
+        query     "update"
+        <stats>
+        </stats>
+    </Module>
+</Plugin>

@@ -1,0 +1,12 @@
+name             'nw-repositories'
+maintainer       'RSA ASOC'
+maintainer_email 'support@rsa.com'
+license          'Proprietary - All Rights Reserved'
+description      'Configures all OS repositories for NetWitness'
+long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+version          '0.6.2'
+supports         'centos', '>= 7'
+depends          'yum', '~> 3.12'
+chef_version     '>= 12'
+source_url       'file:///dev/null'
+issues_url       'file:///dev/null'

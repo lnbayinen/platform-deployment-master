@@ -1,0 +1,6 @@
+python-setuptools
+python-backports-ssl_match_hostname
+cloud-init
+cloud-utils
+cloud-utils-growpart
+haveged

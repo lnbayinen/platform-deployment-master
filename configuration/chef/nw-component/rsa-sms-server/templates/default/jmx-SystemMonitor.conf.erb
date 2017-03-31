@@ -1,0 +1,298 @@
+
+# System Monitor collectd.conf configuration file
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin "java">
+
+  <Plugin "GenericJMX">
+
+    ################
+    # MBean blocks #
+    ################
+
+    # Garbage collector information
+    # NAMING CONVENTION = <MBean "<ObjectName:type>">
+    <MBean "GarbageCollector">
+      ObjectName "java.lang:type=GarbageCollector,*"
+      InstancePrefix "GarbageCollector"
+      InstanceFrom "name"
+      <Value>
+        Type "invocations"
+        InstancePrefix "CollectionCount"
+        Table false
+        Attribute "CollectionCount"
+      </Value>
+      <Value>
+        Type "gauge"
+        InstancePrefix "CollectionTime"
+        Table false
+        Attribute "CollectionTime"
+      </Value>
+    </MBean>
+
+    # Generic heap/nonheap memory usage.
+    <MBean "Memory">
+      ObjectName "java.lang:type=Memory"
+      InstancePrefix "Memory"
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-init"
+        Table false
+        Attribute "HeapMemoryUsage.init"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-max"
+        Table false
+        Attribute "HeapMemoryUsage.max"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-used"
+        Table false
+        Attribute "HeapMemoryUsage.used"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-committed"
+        Table false
+        Attribute "HeapMemoryUsage.committed"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-init"
+        Table false
+        Attribute "NonHeapMemoryUsage.init"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-max"
+        Table false
+        Attribute "NonHeapMemoryUsage.max"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-used"
+        Table false
+        Attribute "NonHeapMemoryUsage.used"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-committed"
+        Table false
+        Attribute "NonHeapMemoryUsage.committed"
+      </Value>
+    </MBean>
+	
+	# Operating System.	
+	<MBean "OperatingSystem">
+      ObjectName "java.lang:type=OperatingSystem"
+      InstancePrefix "OperatingSystem"
+	  <Value>
+        Type "gauge"
+		InstancePrefix "ProcessCpuLoad"
+        Attribute "ProcessCpuLoad"
+      </Value> 
+	  <Value>
+        Type "gauge"
+		InstancePrefix "ProcessCpuTime"
+        Attribute "ProcessCpuTime"
+      </Value> 
+	  <Value>
+        Type "jmx_memory"
+		InstancePrefix "CommittedVirtualMemorySize"
+        Attribute "CommittedVirtualMemorySize"
+      </Value>
+	  <Value>
+        Type "gauge"
+		InstancePrefix "AvailableProcessors"
+        Attribute "AvailableProcessors"
+      </Value>  	  
+    </MBean>
+	
+	# SMS Service.
+	# NOT LOADED
+    <MBean "MonitorSystem">
+      ObjectName "com.rsa.netwitness.sms:type=Service,subType=Monitor,id=System"
+      InstancePrefix "System"
+      <Value>
+        Type "gauge"
+        InstancePrefix "ProcessCpu-current"
+        Attribute "ProcessCpu.current"
+      </Value>
+	  <Value>
+        Type "gauge"
+        InstancePrefix "ProcessCpu-max"
+        Attribute "ProcessCpu.max"
+      </Value>		  
+	  <Value>
+        Type "gauge"
+        InstancePrefix "SystemCpu-current"
+        Attribute "SystemCpu.current"
+      </Value>
+	  <Value>
+        Type "gauge"
+        InstancePrefix "SystemCpu-max"
+        Attribute "SystemCpu.current"
+      </Value>
+	  <Value>
+        Type "gauge"
+        InstancePrefix "UpTime"
+        Attribute "UpTime.upTime"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "ProcessMemory-current"
+        Attribute "ProcessMemory.current"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "ProcessMemory-max"
+        Attribute "ProcessMemory.max"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "SystemMemory-current"
+        Attribute "SystemMemory.current"
+      </Value>	  
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "SystemMemory-max"
+        Attribute "SystemMemory.max"
+      </Value>	  
+    </MBean>
+	
+	# NOT LOADED
+	 <MBean "MonitorDrives">
+      ObjectName "com.rsa.netwitness.sms:type=Service,subType=Monitor,id=Drives"
+      InstancePrefix "Drives"	  
+      <Value>
+        Type "gauge"
+		InstancePrefix "InstalledDriveStats-current"
+        Table false
+        Attribute "InstalledDriveStats.current"
+      </Value>
+	  <Value>
+        Type "gauge"
+		InstancePrefix "InstalledDriveStats-max"
+        Table false
+        Attribute "InstalledDriveStats.max"
+      </Value>	  
+    </MBean>
+	
+	<MBean "SMSStatCache">
+      ObjectName "net.sf.ehcache:type=CacheStatistics,CacheManager=__DEFAULT__,name=com.rsa.collectd.Collectd$Message"
+      InstancePrefix "SMSStatCache"	  
+      <Value>
+        Type "gauge"
+		InstancePrefix "ObjectCount"
+        Table false
+        Attribute "ObjectCount"
+      </Value> 
+	  <Value>
+        Type "percent"
+		InstancePrefix "CacheHitPercentage"
+        Table false
+        Attribute "CacheHitPercentage"
+      </Value>
+      <Value>
+        Type "percent"
+		InstancePrefix "CacheMissPercentage"
+        Table false
+        Attribute "CacheMissPercentage"
+      </Value> 	  
+    </MBean>
+	
+	<MBean "SMSComponentCache">
+      ObjectName "net.sf.ehcache:type=CacheStatistics,CacheManager=__DEFAULT__,name=com.rsa.netwitness.sms.SystemMonitorProtocol$Component"
+      InstancePrefix "SMSComponentCache"	  
+      <Value>
+        Type "gauge"
+		InstancePrefix "ObjectCount"
+        Table false
+        Attribute "ObjectCount"
+      </Value> 
+	  <Value>
+        Type "percent"
+		InstancePrefix "CacheHitPercentage"
+        Table false
+        Attribute "CacheHitPercentage"
+      </Value>
+      <Value>
+        Type "percent"
+		InstancePrefix "CacheMissPercentage"
+        Table false
+        Attribute "CacheMissPercentage"
+      </Value> 	  
+    </MBean>
+	
+	<MBean "ESMStatCache">
+      ObjectName "net.sf.ehcache:type=CacheStatistics,CacheManager=__DEFAULT__,name=esmCache"
+      InstancePrefix "ESMStatCache"	  
+      <Value>
+        Type "gauge"
+		InstancePrefix "ObjectCount"
+        Table false
+        Attribute "ObjectCount"
+      </Value> 
+	  <Value>
+        Type "percent"
+		InstancePrefix "CacheHitPercentage"
+        Table false
+        Attribute "CacheHitPercentage"
+      </Value>
+      <Value>
+        Type "percent"
+		InstancePrefix "CacheMissPercentage"
+        Table false
+        Attribute "CacheMissPercentage"
+      </Value> 	  
+    </MBean>
+
+	<MBean "ESMStat">
+      ObjectName "com.rsa.netwitness.sms:type=Service,subType=Storage,id=persistenceManager"
+      InstancePrefix "ESMStat"	  
+      <Value>
+        Type "counter"
+		InstancePrefix "ReceivedRate"
+        Table false
+        Attribute "RequestStats.esmStatReceiveCount"
+      </Value> 
+    </MBean>	
+	
+	<MBean "SMSStat">
+      ObjectName "com.rsa.netwitness.sms:type=Service,subType=Storage,id=persistenceManager"
+      InstancePrefix "SMSStat"	  
+      <Value>
+        Type "counter"
+		InstancePrefix "ReceivedRate"
+        Table false
+        Attribute "RequestStats.smsStatReceiveCount"
+      </Value> 
+    </MBean>	
+	
+
+    #####################
+    # Connection block  #
+    #####################
+    <Connection>
+      Host "<%=@node_uuid%>"
+      ServiceURL "service:jmx:rmi://localhost:50056/jndi/rmi://localhost:50055/carlos"
+      # NAMING CONVENTION = InstancePrefix "<componentId>_jmx-"
+      InstancePrefix "sms_jmx-"
+      Collect "GarbageCollector"
+      Collect "Memory"
+	  Collect "OperatingSystem"
+	  #Collect "MonitorSystem"
+	  #Collect "MonitorDrives"
+	  Collect "SMSStatCache"
+	  Collect "SMSComponentCache"
+	  Collect "ESMStatCache"
+	  Collect "SMSStat"
+	  Collect "ESMStat"
+    </Connection>
+  </Plugin>
+
+</Plugin>

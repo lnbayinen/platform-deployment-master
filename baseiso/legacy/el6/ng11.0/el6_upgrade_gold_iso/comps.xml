@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE comps PUBLIC "-//Red Hat, Inc.//DTD Comps info//EN" "comps.dtd">
+<comps>
+  <group>
+   <id>rsa-sa-archiver</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-archiver</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwarchiver</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="default">nwworkbench</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-base</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-base</name>
+   <description>RSA Base Packages</description>
+    <packagelist>
+      <packagereq type="mandatory">dracut-fips</packagereq>
+      <packagereq type="mandatory">erlang</packagereq>
+      <packagereq type="mandatory">mcollective</packagereq>
+      <packagereq type="mandatory">mcollective-iptables-agent</packagereq>
+      <packagereq type="mandatory">mcollective-iptables-client</packagereq>
+      <packagereq type="mandatory">mcollective-package-agent</packagereq>
+      <packagereq type="mandatory">mcollective-puppet-agent</packagereq>
+      <packagereq type="mandatory">mcollective-puppet-client</packagereq>
+      <packagereq type="mandatory">mcollective-service-agent</packagereq>
+      <packagereq type="mandatory">mcollective-service-client</packagereq>
+      <packagereq type="mandatory">puppet</packagereq>
+      <packagereq type="mandatory">rabbitmq-server</packagereq>
+      <packagereq type="mandatory">rsa-carlos-rt</packagereq>
+      <packagereq type="mandatory">rsa-collectd</packagereq>
+      <packagereq type="mandatory">rsa-mcollective-agents</packagereq>
+      <packagereq type="mandatory">rsa-puppet-scripts</packagereq>
+      <packagereq type="mandatory">rsa-sms-runtime-rt</packagereq>
+      <packagereq type="optional">openscap</packagereq>
+      <packagereq type="optional">openscap-utils</packagereq>
+      <packagereq type="optional">scap-security-guide</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-broker</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-broker</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwbroker</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-concentrator</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-concentrator</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwconcentrator</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-core</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-core</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">aqueduct-stig</packagereq>
+      <packagereq type="mandatory">bind-utils</packagereq>
+      <packagereq type="mandatory">device-mapper-multipath</packagereq>
+      <packagereq type="mandatory">dracut-fips</packagereq>
+      <packagereq type="mandatory">erlang</packagereq>
+      <packagereq type="mandatory">file</packagereq>
+      <packagereq type="mandatory">lvm2</packagereq>
+      <packagereq type="mandatory">lsof</packagereq>
+      <packagereq type="mandatory">man</packagereq>
+      <packagereq type="mandatory">man-pages</packagereq>
+      <packagereq type="mandatory">mcollective</packagereq>
+      <packagereq type="mandatory">mcollective-iptables-agent</packagereq>
+      <packagereq type="mandatory">mcollective-iptables-client</packagereq>
+      <packagereq type="mandatory">mcollective-package-agent</packagereq>
+      <packagereq type="mandatory">mcollective-package-client</packagereq>
+      <packagereq type="mandatory">mcollective-puppet-agent</packagereq>
+      <packagereq type="mandatory">mcollective-puppet-client</packagereq>
+      <packagereq type="mandatory">mcollective-service-agent</packagereq>
+      <packagereq type="mandatory">mcollective-service-client</packagereq>
+      <packagereq type="mandatory">mlocate</packagereq>
+      <packagereq type="mandatory">net-snmp</packagereq>
+      <packagereq type="mandatory">net-snmp-utils</packagereq>
+      <packagereq type="mandatory">nfs-utils</packagereq>
+      <packagereq type="mandatory">ntp</packagereq>
+      <packagereq type="mandatory">openscap</packagereq>
+      <packagereq type="mandatory">openscap-utils</packagereq>
+      <packagereq type="mandatory">openssh-clients</packagereq>
+      <packagereq type="mandatory">parted</packagereq>
+      <packagereq type="mandatory">pciutils</packagereq>
+      <packagereq type="mandatory">puppet</packagereq>
+      <packagereq type="mandatory">rabbitmq-server</packagereq>
+      <packagereq type="mandatory">rsa-audit-rt</packagereq>
+      <packagereq type="mandatory">rsa-carlos-rt</packagereq>
+      <packagereq type="mandatory">rsa-collectd</packagereq>
+      <packagereq type="mandatory">rsa-mcollective-agents</packagereq>
+      <packagereq type="mandatory">rsa-protobufs-rt</packagereq>
+      <packagereq type="mandatory">rsa-puppet-scripts</packagereq>
+      <!-- <packagereq type="mandatory">rsa-sa-fips</packagereq> -->
+      <packagereq type="mandatory">rsa-sa-gpg-pubkeys</packagereq>
+      <!-- no longer required in 11.x -->
+      <!-- <packagereq type="mandatory">rsa-sa-sshconfig</packagereq> -->
+      <packagereq type="mandatory">rsa-sa-tools</packagereq>
+      <packagereq type="mandatory">rsa-sms-runtime-rt</packagereq>
+      <packagereq type="mandatory">scap-security-guide</packagereq>
+      <packagereq type="mandatory">strace</packagereq>
+      <packagereq type="mandatory">system-config-firewall-base</packagereq>
+      <packagereq type="mandatory">sysstat</packagereq>
+      <packagereq type="mandatory">tcpdump</packagereq>
+      <!-- centos 6.7 tg3 driver meets version requirement -->
+      <!-- <packagereq type="mandatory">tg3</packagereq> -->
+      <!-- <packagereq type="mandatory">libbwrap1</packagereq> -->
+      <packagereq type="mandatory">tmpwatch</packagereq>
+      <packagereq type="mandatory">traceroute</packagereq>
+      <packagereq type="mandatory">usbutils</packagereq>
+      <packagereq type="mandatory">xfsdump</packagereq>
+      <packagereq type="mandatory">xfsprogs</packagereq>
+      <packagereq type="mandatory">yum-utils</packagereq>
+      <packagereq type="optional">nwsupport-script</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-esa-server</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-esa-server</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">rsa-esa-server</packagereq>
+      <packagereq type="mandatory">rsa-esa-analytics-server</packagereq>
+      <!-- <packagereq type="default">bsafe</packagereq> -->
+      <!-- <packagereq type="default">mongodb-org</packagereq> -->
+      <packagereq type="default">rsa-esa-client</packagereq>
+      <packagereq type="default">rsa-contexthub</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-demo-lab</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-demo-lab</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="optional">nwarchiver</packagereq>
+      <packagereq type="optional">nwbroker</packagereq>
+      <packagereq type="optional">nwconcentrator</packagereq>
+      <packagereq type="optional">nwdecoder</packagereq>
+      <packagereq type="optional">nwipdbextractor</packagereq>
+      <packagereq type="optional">nwlogcollector</packagereq>
+      <packagereq type="optional">nwlogdecoder</packagereq>
+      <packagereq type="optional">nwwarehouseconnector</packagereq>
+      <packagereq type="optional">rsa-esa-server</packagereq>
+      <packagereq type="optional">rsaMalwareDevice</packagereq>
+      <packagereq type="optional">rsaMalwareDeviceCoLo</packagereq>
+      <packagereq type="optional">rsa-security-analytics-web-server</packagereq>
+    </packagelist>
+  </group>
+  <group>
+  <id>rsa-sa-ipmi-tools</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-esa-server</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">OpenIPMI</packagereq>
+      <packagereq type="mandatory">ipmitool</packagereq>
+      <packagereq type="mandatory">lm_sensors</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-log-aio</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-log-aio</name>
+   <description></description>
+    <packagelist>
+      <!-- <packagereq type="mandatory">apacheds</packagereq> -->
+      <packagereq type="mandatory">cifs-utils</packagereq>
+      <packagereq type="mandatory">createrepo</packagereq>
+      <packagereq type="mandatory">fneserver</packagereq>
+      <packagereq type="mandatory">java-1.8.0-openjdk</packagereq>
+      <packagereq type="mandatory">jettyuax</packagereq>
+      <packagereq type="mandatory">krb5-workstation</packagereq>
+      <packagereq type="mandatory">lighttpduax</packagereq>
+      <packagereq type="mandatory">mcollective-client</packagereq>
+      <packagereq type="mandatory">nginx</packagereq>
+      <packagereq type="mandatory">rsa-nw-dashboardcontent</packagereq>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwbroker</packagereq>
+      <packagereq type="mandatory">nwconcentrator</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="mandatory">nwipdbextractor</packagereq>
+      <packagereq type="mandatory">nwlogcollector</packagereq>
+      <packagereq type="mandatory">nwlogdecoder</packagereq>
+      <packagereq type="mandatory">openldap-clients</packagereq>
+      <packagereq type="mandatory">pam_krb5</packagereq>
+      <packagereq type="mandatory">pam_ldap</packagereq>
+      <packagereq type="mandatory">pam_radius_auth</packagereq>
+      <packagereq type="mandatory">postgresql-server</packagereq>
+      <packagereq type="mandatory">puppet-server</packagereq>
+      <packagereq type="mandatory">pymongo</packagereq>
+      <packagereq type="mandatory">PyYAML</packagereq>
+      <packagereq type="mandatory">re-server</packagereq>
+      <packagereq type="mandatory">rrdtool</packagereq>
+      <packagereq type="mandatory">rsa-audit-plugins</packagereq>
+      <!-- <packagereq type="mandatory">rsa-im-server</packagereq> -->
+      <packagereq type="mandatory">rsa-security-server</packagereq>
+      <packagereq type="mandatory">rsa-config-server</packagereq>
+      <packagereq type="mandatory">rsa-orchestration-server</packagereq>
+      <packagereq type="mandatory">rsa-admin-server</packagereq>
+      <packagereq type="mandatory">rsa-cms-server</packagereq>
+      <packagereq type="mandatory">rsa-response</packagereq>
+      <packagereq type="mandatory">rsa-investigate</packagereq>
+      <packagereq type="mandatory">rsa-puppet-modules</packagereq>
+      <packagereq type="mandatory">rsa-sms-server</packagereq>
+      <packagereq type="mandatory">salic</packagereq>
+      <packagereq type="mandatory">sa-ui-client</packagereq>
+      <!-- <packagereq type="mandatory">security-analytics-web-server</packagereq> -->
+      <packagereq type="mandatory">sid-pam-installer</packagereq>
+      <!-- <packagereq type="default">bsafe</packagereq> -->
+      <packagereq type="default">nwlogdecoder-analytics-content</packagereq>
+      <packagereq type="default">nwlogdecoder-envision-base-content</packagereq>
+      <packagereq type="optional">nwlogcollector</packagereq>
+      <!-- <packagereq type="optional">nwworkbench</packagereq> -->
+      <packagereq type="optional">rsaMalwareDeviceCoLo</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-log-decoder</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-log-decoder</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="mandatory">nwlogdecoder</packagereq>
+      <packagereq type="default">nwlogdecoder-analytics-content</packagereq>
+      <packagereq type="default">nwlogdecoder-envision-base-content</packagereq>
+      <packagereq type="optional">nwlogcollector</packagereq>
+      <packagereq type="optional">nwwarehouseconnector</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-log-hybrid</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-log-hybrid</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwconcentrator</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="mandatory">nwlogdecoder</packagereq>
+      <packagereq type="default">nwlogdecoder-analytics-content</packagereq>
+      <packagereq type="default">nwlogdecoder-envision-base-content</packagereq>
+      <packagereq type="optional">nwlogcollector</packagereq>
+      <packagereq type="optional">nwwarehouseconnector</packagereq>
+    </packagelist>
+  </group>
+  <group>
+  <id>rsa-sa-lsi-megacli</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-lsi-megacli</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">Lib_Utils</packagereq>
+      <packagereq type="mandatory">MegaCli</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-malware-analysis</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-malware-analytics</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">geoip-dat</packagereq>
+      <packagereq type="mandatory">java-1.8.0-openjdk</packagereq>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwbroker</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="mandatory">postgresql91-server</packagereq>
+      <packagereq type="mandatory">samba-common</packagereq>
+      <packagereq type="mandatory">samba</packagereq>
+      <packagereq type="mandatory">samba-winbind</packagereq>
+      <packagereq type="mandatory">vsftpd</packagereq>
+      <!-- <packagereq type="default">bsafe</packagereq> -->
+      <packagereq type="optional">rsaMalwareDevice</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-malware-analysis-colocated</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-malware-analytics</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">geoip-dat</packagereq>
+      <packagereq type="mandatory">java-1.8.0-openjdk</packagereq>
+      <packagereq type="mandatory">rsaMalwareDeviceCoLo</packagereq>
+      <packagereq type="mandatory">samba-common</packagereq>
+      <packagereq type="mandatory">samba</packagereq>
+      <packagereq type="mandatory">samba-winbind</packagereq>
+      <packagereq type="mandatory">vsftpd</packagereq>
+      <!-- <packagereq type="default">bsafe</packagereq> -->
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-packet-aio</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-packet-aio</name>
+   <description></description>
+    <packagelist>
+      <!-- <packagereq type="mandatory">apacheds</packagereq> -->
+      <packagereq type="mandatory">cifs-utils</packagereq>
+      <packagereq type="mandatory">createrepo</packagereq>
+      <packagereq type="mandatory">fneserver</packagereq>
+      <packagereq type="mandatory">java-1.8.0-openjdk</packagereq>
+      <packagereq type="mandatory">jettyuax</packagereq>
+      <packagereq type="mandatory">krb5-workstation</packagereq>
+      <packagereq type="mandatory">lighttpduax</packagereq>
+      <packagereq type="mandatory">mcollective-client</packagereq>
+      <packagereq type="mandatory">nginx</packagereq>
+      <packagereq type="mandatory">rsa-nw-dashboardcontent</packagereq>     
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwbroker</packagereq>
+      <packagereq type="mandatory">nwconcentrator</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="mandatory">nwdecoder</packagereq>
+      <packagereq type="mandatory">nwipdbextractor</packagereq>
+      <packagereq type="mandatory">openldap-clients</packagereq>
+      <packagereq type="mandatory">pam_krb5</packagereq>
+      <packagereq type="mandatory">pam_ldap</packagereq>
+      <packagereq type="mandatory">pam_radius_auth</packagereq>
+      <packagereq type="mandatory">pfring</packagereq>
+      <packagereq type="mandatory">postgresql-server</packagereq>
+      <packagereq type="mandatory">puppet-server</packagereq>
+      <packagereq type="mandatory">pymongo</packagereq>
+      <packagereq type="mandatory">PyYAML</packagereq>
+      <packagereq type="mandatory">re-server</packagereq>
+      <packagereq type="mandatory">rrdtool</packagereq>
+      <packagereq type="mandatory">rsa-audit-plugins</packagereq>
+      <!-- <packagereq type="mandatory">rsa-im-server</packagereq> -->
+      <packagereq type="mandatory">rsa-security-server</packagereq>
+      <packagereq type="mandatory">rsa-config-server</packagereq>
+      <packagereq type="mandatory">rsa-orchestration-server</packagereq>
+      <packagereq type="mandatory">rsa-admin-server</packagereq>
+      <packagereq type="mandatory">rsa-cms-server</packagereq>
+      <packagereq type="mandatory">rsa-response</packagereq>
+      <packagereq type="mandatory">rsa-investigate</packagereq>
+      <packagereq type="mandatory">rsa-puppet-modules</packagereq>
+      <packagereq type="mandatory">rsa-sms-server</packagereq>
+      <packagereq type="mandatory">salic</packagereq>
+      <packagereq type="mandatory">sa-ui-client</packagereq>
+      <!-- <packagereq type="mandatory">security-analytics-web-server</packagereq> -->
+      <packagereq type="mandatory">sid-pam-installer</packagereq>
+      <!-- <packagereq type="default">bsafe</packagereq> -->
+      <packagereq type="default">nwdecoder-analytics-content</packagereq>
+      <!-- <packagereq type="optional">nwworkbench</packagereq> -->
+      <packagereq type="optional">rsaMalwareDeviceCoLo</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-packet-decoder</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-packet-decoder</name>
+   <description></description>
+    <packagelist>
+       <packagereq type="mandatory">nwappliance</packagereq>
+       <packagereq type="mandatory">nwconsole</packagereq>
+       <packagereq type="mandatory">nwdecoder</packagereq>
+       <packagereq type="default">nwdecoder-analytics-content</packagereq>
+       <packagereq type="optional">nwwarehouseconnector</packagereq>
+       <packagereq type="mandatory">pfring</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-packet-hybrid</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-packet-hybrid</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwconcentrator</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="mandatory">nwdecoder</packagereq>
+      <packagereq type="default">nwdecoder-analytics-content</packagereq>
+      <packagereq type="optional">nwwarehouseconnector</packagereq>
+      <packagereq type="mandatory">pfring</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-remote-ipdbextractor</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-remote-ipdbextractor</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="mandatory">nwipdbextractor</packagereq>
+      <packagereq type="default">cifs-utils</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-remote-logcollector</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-remote-logcollector</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="mandatory">nwlogcollector</packagereq>
+      <packagereq type="default">krb5-workstation</packagereq>
+      <packagereq type="default">nwlogcollectorcontent</packagereq>
+      <packagereq type="default">nwlogcollectortools</packagereq>
+      <packagereq type="default">rssh</packagereq>
+      <packagereq type="default">vsftpd</packagereq>
+    </packagelist>
+  </group>
+  <group>
+  <id>rsa-sa-san-tools</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-san-tools</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">HostAgent-Linux-64-x86-en_US</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-server</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-server</name>
+   <description></description>
+    <packagelist>
+      <!-- <packagereq type="mandatory">apacheds</packagereq> -->
+      <packagereq type="mandatory">cifs-utils</packagereq>
+      <packagereq type="mandatory">createrepo</packagereq>
+      <packagereq type="mandatory">fneserver</packagereq>
+      <packagereq type="mandatory">java-1.8.0-openjdk</packagereq>
+      <packagereq type="mandatory">jettyuax</packagereq>
+      <packagereq type="mandatory">krb5-workstation</packagereq>
+      <!-- <packagereq type="mandatory">lighttpduax</packagereq> -->
+      <packagereq type="mandatory">mcollective-client</packagereq>
+      <packagereq type="mandatory">nginx</packagereq>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwbroker</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="mandatory">rsa-nw-dashboardcontent</packagereq>
+      <packagereq type="mandatory">nwipdbextractor</packagereq>
+      <packagereq type="mandatory">openldap-clients</packagereq>
+      <packagereq type="mandatory">pam_krb5</packagereq>
+      <packagereq type="mandatory">pam_ldap</packagereq>
+      <packagereq type="mandatory">pam_radius_auth</packagereq>
+      <packagereq type="mandatory">postgresql-server</packagereq>
+      <packagereq type="mandatory">puppet-server</packagereq>
+      <packagereq type="mandatory">pymongo</packagereq>
+      <packagereq type="mandatory">PyYAML</packagereq>
+      <packagereq type="mandatory">re-server</packagereq>
+      <packagereq type="mandatory">rrdtool</packagereq>
+      <!-- <packagereq type="mandatory">rsa-audit-plugins</packagereq> -->
+      <!-- <packagereq type="mandatory">rsa-im-server</packagereq> -->
+      <packagereq type="mandatory">rsa-security-server</packagereq>
+      <packagereq type="mandatory">rsa-config-server</packagereq>
+      <packagereq type="mandatory">rsa-orchestration-server</packagereq>
+      <packagereq type="mandatory">rsa-admin-server</packagereq>
+      <packagereq type="mandatory">rsa-cms-server</packagereq>
+      <packagereq type="mandatory">rsa-response</packagereq>
+      <packagereq type="mandatory">rsa-investigate</packagereq>
+      <packagereq type="mandatory">rsa-puppet-modules</packagereq>
+      <!-- <packagereq type="mandatory">rsa-sa-nginxconfig</packagereq> -->
+      <packagereq type="mandatory">rsa-sms-server</packagereq>
+      <packagereq type="mandatory">salic</packagereq>
+      <packagereq type="mandatory">sa-ui-client</packagereq>
+      <!-- <packagereq type="mandatory">security-analytics-web-server</packagereq> -->
+      <packagereq type="mandatory">sid-pam-installer</packagereq>
+      <!-- <packagereq type="default">bsafe</packagereq> -->
+      <!-- <packagereq type="optional">nwworkbench</packagereq> -->
+      <packagereq type="optional">rsaMalwareDeviceCoLo</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>rsa-sa-warehouse-connector</id>
+   <default>false</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>rsa-sa-warehouse-connector</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">nwappliance</packagereq>
+      <packagereq type="mandatory">nwconsole</packagereq>
+      <packagereq type="mandatory">nwwarehouseconnector</packagereq>
+    </packagelist>
+  </group>
+</comps>

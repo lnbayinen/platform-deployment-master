@@ -1,0 +1,234 @@
+. generateFileInjector.sh || exit 1
+
+# add url install type
+function writeInstallType
+{
+	local installType=$1
+	local source=$2
+
+	
+	echo "text"
+	
+#	echo "install" 
+#	
+#	if [ "$installType" == "usb" ]
+#	then
+#		echo "harddrive --partition=$source --dir=/"
+#	elif [ "$installType" == "cdrom" ]
+#	then
+#		echo "cdrom"
+#	elif [[ `echo $installType | grep -i '^ *http'` ]] || [[ `echo $installType | grep -i '^ *ftp'` ]]
+#	then
+#		echo "url --url $installType"
+#	else
+#		echo "unspecified install type (cdrom/usb/url)" >&2
+#		return 1
+#	fi
+	
+	return 0
+}
+
+#function writeInstallType
+#{
+#	local installType=$1
+#	local source=$2 
+#	
+#	echo "text"
+#	
+#	echo "install" 
+#	
+#	if [ "$installType" == "usb" ]
+#	then
+#		echo "harddrive --partition=$source --dir=/"
+#	elif [ "$installType" == "cdrom" ]
+#	then
+#		echo "cdrom"
+#	else
+#		echo "unspecified install type (cdrom/usb)" >&2
+#		return 1
+#	fi
+#	
+#	return 0
+#} 
+
+function writeStandardConfigs
+{
+	local paramlist
+	declare -a paramlist
+	local count
+	local listlen
+	let count=0
+	while ! [ -z $1 ]
+	do
+		paramlist[$count]=$1
+		shift
+		let count=$count+1 
+	done
+	let listlen=${#paramlist[@]}
+	echo 'lang en_US.UTF-8
+keyboard us 
+rootpw --iscrypted $1$y9gWm3fx$UJKCXx4RB9ToEh5tIHbhP.
+authconfig --enableshadow --enablemd5
+selinux --permissive'
+if [ $listlen -gt 1 ]; then
+	echo "bootloader --location=${paramlist[1]}"
+else
+	#echo 'bootloader --location=none'
+	#echo 'bootloader --location=mbr'
+	echo '%include /tmp/nwks.cfg'
+fi
+if [ $listlen -gt 0 ]; then
+	echo "timezone --utc ${paramlist[0]}"
+else
+	echo 'timezone --utc Etc/UTC'
+fi
+
+# moving to %post
+#if [[ `echo "${paramlist[0]}" | grep -i 'dell'` ]]; then
+#	echo "network --device=em1 --bootproto=static --ip=192.168.1.1 --netmask=255.255.255.0 --gateway=192.168.1.254 --onboot=yes"
+#elif [[ `echo "${paramlist[0]}" | grep -i 'udev'` ]]; then
+#	echo 'network --device=eth0 --bootproto=static --ip=192.168.1.1 --netmask=255.255.255.0 --gateway=192.168.1.254 --onboot=yes'
+#fi
+
+
+}
+
+function writeFirewall
+{
+	echo -n "firewall --enabled --port=22:tcp "
+	local port
+	for port in "$@"
+	do
+		if [[ `echo $port | grep ':'` ]]; then
+			echo -n "--port=${port} "
+		else
+			echo -n "--port=${port}:tcp "
+		fi
+	done
+	echo
+	return 0
+}
+
+function writeRaidSetup
+{
+	local installType=$1
+	local megaRaidFile=$2
+	local volumeCommands=$3
+	local bootVol=$4
+	[ "$megaRaidFile" ] || return 1
+	
+#	if [ "$installType" == "cdrom" ]
+#	then
+		generateFileInjector "$megaRaidFile"
+		
+		local megaRaidTool=$(basename "$megaRaidFile")
+		
+		echo "function initRaid
+{
+	local COMMAND_TOOL=/tmp/$megaRaidTool"
+	
+	# msdos partition <= 2.2TB
+	if [ "$bootVol" = "msdos" ] || [ -z $4 ]; then
+		echo '	local NEW_LD_OPTIONS="WB ADRA Cached CachedBadBBU -strpsz128"'
+	# gpt partition 2TB+, create separate boot volume
+	elif [ "$bootVol" = "gpt" ]; then 
+		echo '	local NEW_LD_OPTIONS_1="WB ADRA Cached CachedBadBBU -sz256 -strpsz128"'	
+		echo '	local NEW_LD_OPTIONS_2="WB ADRA Cached CachedBadBBU -strpsz128"'	
+	fi
+	echo '	
+	if ! [[ -e $COMMAND_TOOL ]]; then
+            extractMegaCLI > $COMMAND_TOOL
+	    chmod +x $COMMAND_TOOL
+	fi
+		'
+	echo '
+	# if specified, set adapter ID
+	if [ -e /tmp/intAdapterId ]; then
+		local adpID=`cat /tmp/intAdapterId`'
+		echo '		local ENCID=$("$COMMAND_TOOL" -pdlist -a$adpID | while read p1 p2 p3 p4; do if [ "$p1" == "Enclosure" ]; then echo $p4; break; fi; done)'
+		echo '		local ADAPTER=$adpID
+	else'
+		echo '		local ENCID=$("$COMMAND_TOOL" -pdlist -a0 | while read p1 p2 p3 p4; do if [ "$p1" == "Enclosure" ]; then echo $p4; break; fi; done)'
+
+	echo '		local ADAPTER=0
+	fi
+'
+	echo '	local clearStatus
+	"$COMMAND_TOOL" -cfgclr -a$ADAPTER
+	clearStatus=$?
+	if [ "$clearStatus" != "0" ] 
+	then
+		# try one more time, just to be sure.
+		"$COMMAND_TOOL" -cfgclr -a$ADAPTER
+		clearStatus=$?
+	fi
+
+	if [ "$clearStatus" != "0" ]
+	then
+		echo "$COMMAND_TOOL operation failed!"
+		return 1
+	else'
+	
+		echo "		$volumeCommands"
+	
+	
+		echo '		# take a moment to be sure the new volumes show up.		
+		sleep 8
+		return 0
+	fi
+}'
+#	else
+#		echo 'function initRaid
+#{
+#	return 0
+#}'
+#	fi
+
+	return 0
+}
+
+function writeBootRaid
+{
+	# mirror $1 and $2 (small internal drives)
+	# /boot partition raid:  so either drive can be used as the boot drive.
+	if ! [[ -z $2 ]]; then
+            # assume SW RAID1
+            echo "part raid.10 --size=16 --maxsize=264 --grow --ondisk=$1 --asprimary"
+	    echo "part raid.11 --size=16 --maxsize=264 --grow --ondisk=$2 --asprimary"
+	    echo 'raid /boot --fstype ext4 --fsoptions "nosuid" --level=RAID1 --device=md0 raid.10 raid.11'
+        else
+            # assume planar sata controller or Dell HW RAID1
+            echo "part /boot --size=16 --maxsize=264 --grow --ondisk=$1 --asprimary --fstype=ext4"
+        fi
+	return 0
+}
+
+function writePackageList
+{
+	echo '%packages --nobase'
+	cat packagelist
+	local packin
+	for packin in "$@"
+	do
+		echo "$packin"
+	done 
+	echo '%end'
+	return 0
+}
+
+function majorMinorVersion
+{
+#	if ! [ -x ../build-release/CoreVersion ]
+#	then
+#		pushd ..
+#		make -j 8 build-release/CoreVersion
+#		popd
+#	fi >/dev/null
+#	echo $(../build-release/CoreVersion major).$(../build-release/CoreVersion minor)
+
+#	todo: figure out how to propogate the version from the source header
+#             to this kickstart
+	echo 9.0
+}
+
+

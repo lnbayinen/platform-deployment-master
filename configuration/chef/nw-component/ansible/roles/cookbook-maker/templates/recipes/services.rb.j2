@@ -1,0 +1,14 @@
+#
+# Cookbook Name:: {{ cookbook_name }}
+# Recipe:: services
+#
+# Copyright (C) 2016 RSA Security
+#
+# All rights reserved - Do Not Redistribute
+#
+
+node['{{ cookbook_name }}']['service_names'].each do |svc|
+  service svc do
+    action [:enable, :start]
+  end
+end

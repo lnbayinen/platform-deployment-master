@@ -1,0 +1,12 @@
+# Copyright (C) 2016 RSA Security
+#
+# All rights reserved - Do Not Redistribute
+#
+# by default act only as a basic NTP client
+restrict -4 default nomodify nopeer noquery notrap
+restrict -6 default nomodify nopeer noquery notrap
+# allow NTP messages from the loopback address, useful for debugging
+restrict 127.0.0.1
+restrict ::1
+# server(s) we time sync to
+<%=@node0_host%>

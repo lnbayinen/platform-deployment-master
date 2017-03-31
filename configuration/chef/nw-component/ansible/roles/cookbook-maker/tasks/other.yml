@@ -1,0 +1,13 @@
+---
+- name: '{{ cookbook_name }} : metadata.rb'
+  template:
+    src: templates/metadata.rb.j2
+    dest: '{{ target_dir }}/{{ cookbook_name }}/metadata.rb'
+- name: '{{ cookbook_name }} : README.md'
+  template:
+    src: templates/README.md.j2
+    dest: '{{ target_dir }}/{{ cookbook_name }}/README.md'
+- name: '{{ cookbook_name }} : Vagrantfile'
+  template:
+    src: templates/Vagrantfile.j2
+    dest: '{{ target_dir }}/{{ cookbook_name }}/Vagrantfile'

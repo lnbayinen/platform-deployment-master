@@ -1,0 +1,13 @@
+---
+- name: '{{ cookbook_name }} : unit tests'
+  template:
+    src: 'templates/spec/tests/{{ item }}_spec.rb.j2'
+    dest: '{{ target_dir }}/{{ cookbook_name }}/spec/tests/{{ item }}_spec.rb'
+  with_items:
+    - default
+    - accounts
+    - groups
+    - filesystem
+    - firewall
+    - packages
+    - services

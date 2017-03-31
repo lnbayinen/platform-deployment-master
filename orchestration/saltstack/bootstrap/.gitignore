@@ -1,0 +1,20 @@
+# Package Files
+*.jar
+*.war
+*.ear
+
+# IDE/editor files
+*~
+.idea/
+*.iml
+
+# Build artifacts
+*.class
+target/
+
+# virtual machine crash logs
+hs_err_pid*
+
+# Other
+*.log
+.DS_Store

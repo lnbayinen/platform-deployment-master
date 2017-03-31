@@ -1,0 +1,791 @@
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin generic_cpp>
+    PluginModulePath "/usr/lib64/collectd"
+
+    <Module "NgNativeReader" "NwLogDecoder-FastUpdate">
+        port      "56002"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "10"
+
+        <stats>
+            <stat>
+                path             "/sys/stats/service.status"
+                plugin           "logdecoder_sys"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "service.status"
+                <meta>
+                    name         "Service State"
+                    description  "%description%"
+                    category     "ProcessInfo"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.status"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "capture.status"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.packet.rate"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "capture.packet.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/pool.packet.assembler"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "pool.packet.assembler"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Pool"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/pool.packet.capture"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "pool.packet.capture"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Pool"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/pool.packet.write"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "pool.packet.write"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Pool"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/assembler.packet.pages"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "assembler.packet.pages"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Assembler"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/sdk/stats/queries.active"
+                plugin           "logdecoder_sdk"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queries.active"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Decoder"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/sdk/stats/queries.pending"
+                plugin           "logdecoder_sdk"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queries.pending"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Decoder"
+                    path         "%path%"
+                </meta>
+            </stat>
+        </stats>
+    </Module>
+
+    <Module "NgNativeReader" "NwLogDecoder-NormalUpdate">
+        port      "56002"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "60"
+
+        <stats>
+            # Begin Service
+            <stat>
+                path             "/decoder/stats/assembler.meta.rate"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "assembler.meta.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Assembler"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/assembler.meta.rate.max"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "assembler.meta.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Assembler"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/assembler.packet.bytes"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "assembler.packet.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Assembler"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/assembler.packet.rate"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "assembler.packet.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Assembler"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/assembler.packet.rate.max"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "assembler.packet.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Assembler"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.avg.size"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "capture.avg.size"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.dropped"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "capture.dropped"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.dropped.percent"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "capture.dropped.percent"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                    units        "%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.dropped.percent.max"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "capture.dropped.percent.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                    units        "%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.filtered"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "capture.filtered"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.header.bytes"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "capture.header.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.rate"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "capture.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.kept"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "capture.kept"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.packet.rate.max"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "capture.packet.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.payload.bytes"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "capture.payload.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.rate.max"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "capture.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.received"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "capture.received"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/capture.total.bytes"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "capture.total.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Capture"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/pool.packet.collect"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "pool.packet.collect"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Pool"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/pool.packet.export"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "pool.packet.export"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Pool"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/config/rules/rule.errors"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "rule.errors"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Decoder"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/time.begin"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "time.begin"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Decoder"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/time.capture"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "time.capture"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Decoder"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/decoder/stats/time.end"
+                plugin           "logdecoder_decoder"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "time.end"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Decoder"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.free.space"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.free.space"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.bytes"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.free.space"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.free.space"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.rate"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.rate.max"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.total"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.total"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.volume.bytes"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.volume.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/packet.free.space"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "packet.free.space"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/packet.bytes"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "packet.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/packet.rate"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "packet.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/packet.rate.max"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "packet.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/packet.total"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "packet.total"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/packet.volume.bytes"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "packet.volume.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.bytes"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.rate"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.rate.max"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.total"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.total"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.volume.bytes"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.volume.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/status"
+                plugin           "logdecoder_database"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "status"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/index.bytes"
+                plugin           "logdecoder_index"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "index.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/memory.used"
+                plugin           "logdecoder_index"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "memory.used"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/time.begin"
+                plugin           "logdecoder_index"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "time.begin"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/time.end"
+                plugin           "logdecoder_index"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "time.end"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/values.added"
+                plugin           "logdecoder_index"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "values.added"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                </meta>
+            </stat>
+            # End Service
+        </stats>
+    </Module>
+</Plugin>

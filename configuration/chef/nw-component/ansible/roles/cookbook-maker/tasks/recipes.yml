@@ -1,0 +1,13 @@
+---
+- name: '{{ cookbook_name }} : recipes'
+  template:
+    src: 'templates/recipes/{{ item }}.rb.j2'
+    dest: '{{ target_dir }}/{{ cookbook_name }}/recipes/{{ item }}.rb'
+  with_items:
+    - default
+    - accounts
+    - groups
+    - filesystem
+    - firewall
+    - packages
+    - services

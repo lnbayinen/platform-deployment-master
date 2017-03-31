@@ -1,0 +1,15 @@
+---
+- name: '{{ cookbook_name }} : static files'
+  copy:
+    src: 'files/{{ item }}'
+    dest: '{{ target_dir }}/{{ cookbook_name }}/{{ item }}'
+  with_items:
+    - Berksfile
+    - chefignore
+    - Gemfile
+    - LICENSE
+    - Rakefile
+    - Thorfile
+    - spec/spec_helper.rb
+    - .rspec
+    - .gitignore

@@ -1,0 +1,1015 @@
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin generic_cpp>
+    PluginModulePath "/usr/lib64/collectd"
+
+    <Module "NgNativeReader" "NwLogCollector-FastUpdate">
+        port      "56001"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "10"
+
+        <stats>
+            <stat>
+                path             "/sys/stats/service.status"
+                plugin           "logcollector_sys"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "service.status"
+                <meta>
+                    name         "Service State"
+                    description  "%description%"
+                    category     "ProcessInfo"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/state"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  ""
+                type             "enumerated"
+                type_instance    "state"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+                <enumData>
+                    stopped    "0"
+                    started    "1"
+                    stopping   "2"
+                    starting   "3"
+                    paused     "4"
+                </enumData>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/total_events_rate"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "total_events_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "All"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "eps"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/<^(?!total_.*).*$>/total_events_rate"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  "%2%"
+                type             "gauge"
+                type_instance    "total_events_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "%2%"
+                    path         "%path%"
+                    p1           "%1%"
+                    p2           "%2%"
+                    units         "eps"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/state"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "enumerated"
+                type_instance    "state"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+                <enumData>
+                    stopped    "0"
+                    started    "1"
+                    stopping   "2"
+                    starting   "3"
+                    paused     "4"
+                </enumData>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/eventsources/total_events_rate"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "total_events_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    subitem      "All"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "eps"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/tcp_connector_bytes_written_rate"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "tcp_connector_bytes_written_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                    units        "bytes"
+                </meta>
+            </stat>
+        </stats>
+    </Module>
+
+    <Module "NgNativeReader" "NwLogCollector-NormalUpdate">
+        port      "56001"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "60"
+
+        <stats>
+            # Begin Service
+
+            # LogCollection Types
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/total_events"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_events"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "All"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/total_filtered_events"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_filtered_events"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "All"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/total_filtered_events_rate"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "total_filtered_events_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "All"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "eps"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/total_errors"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_errors"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "All"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/total_errors_rate"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "total_errors_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "All"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "errors/sec"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/total_warnings"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_warnings"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "All"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/total_failed_executions"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_failed_executions"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "All"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+
+            # LogCollection Event Source Types
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/<^(?!total_.*).*$>/total_events"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  "%2%"
+                type             "counter"
+                type_instance    "total_events"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "%2%"
+                    path         "%path%"
+                    p1           "%1%"
+                    p2           "%2%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/<^(?!total_.*).*$>/total_filtered_events"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  "%2%"
+                type             "counter"
+                type_instance    "total_filtered_events"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "%2%"
+                    path         "%path%"
+                    p1           "%1%"
+                    p2           "%2%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/<^(?!total_.*).*$>/total_filtered_events_rate"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  "%2%"
+                type             "gauge"
+                type_instance    "total_filtered_events_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "%2%"
+                    path         "%path%"
+                    p1           "%1%"
+                    p2           "%2%"
+                    units         "eps"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/<^(?!total_.*).*$>/total_errors"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  "%2%"
+                type             "counter"
+                type_instance    "total_errors"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "%2%"
+                    path         "%path%"
+                    p1           "%1%"
+                    p2           "%2%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/<^(?!total_.*).*$>/total_errors_rate"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  "%2%"
+                type             "gauge"
+                type_instance    "total_errors_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "%2%"
+                    path         "%path%"
+                    p1           "%1%"
+                    p2           "%2%"
+                    units         "errors/sec"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/<^(?!total_.*).*$>/total_warnings"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  "%2%"
+                type             "counter"
+                type_instance    "total_warnings"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "%2%"
+                    path         "%path%"
+                    p1           "%1%"
+                    p2           "%2%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/eventsources/<^(?!total_.*).*$>/total_failed_executions"
+                plugin           "logcollector_logcollection.%1%"
+                plugin_instance  "%2%"
+                type             "counter"
+                type_instance    "total_failed_executions"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) Collection"
+                    subitem      "%2%"
+                    path         "%path%"
+                    p1           "%1%"
+                    p2           "%2%"
+                </meta>
+            </stat>
+
+            # Event Processors
+            <stat>
+                path             "/event-processors/<.*>/stats/eventsources/total_events"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_events"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/eventsources/total_filtered_events"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_filtered_events"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/eventsources/total_filtered_events_rate"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "total_filtered_events_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "eps"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/eventsources/total_errors"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_errors"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/eventsources/total_errors_rate"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "total_errors_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "eps"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/eventsources/total_warnings"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_warnings"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/eventsources/total_failed_executions"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_failed_executions"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+
+            # Event Processors - Logdecoder destination
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/queue_events_in"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "queue_events_in"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/queue_events_in_rate"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queue_events_in_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "eps"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/queue_events_out"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "queue_events_out"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/queue_events_out_rate"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queue_events_out_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "eps"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/queue_events_size"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queue_events_size"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/queue_percent_full"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queue_percent_full"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/tcp_connector_buffers_percent_full"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "tcp_connector_buffers_percent_full"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/tcp_connector_bytes_written"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "tcp_connector_bytes_written"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                    units        "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/tcp_connector_dispatch_errors"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "tcp_connector_dispatch_errors"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/tcp_connector_events_written"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "tcp_connector_events_written"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/event-processors/<.*>/stats/destinations/logdecoder/tcp_connector_events_written_rate"
+                plugin           "logcollector_eventprocessor.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "tcp_connector_events_written_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) EventProcessor"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "eps"
+                </meta>
+            </stat>
+
+
+            # File Additions
+            <stat>
+                path             "/logcollection/file/stats/eventsources/total_files_rate"
+                plugin           "logcollector_logcollection.file"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "total_files_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "File Collection"
+                    path         "%path%"
+                    units         "eps"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/file/stats/eventsources/total_files"
+                plugin           "logcollector_logcollection.file"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_files"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "File Collection"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/file/stats/eventsources/total_bytes"
+                plugin           "logcollector_logcollection.file"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "total_bytes"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "File Collection"
+                    path         "%path%"
+                    units        "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/file/stats/eventsources/total_bytes_rate"
+                plugin           "logcollector_logcollection.file"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "total_bytes_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "File Collection"
+                    path         "%path%"
+                    units        "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/file/stats/eventsources/<^(?!total_.*).*$>/total_files_rate"
+                plugin           "logcollector_logcollection.file"
+                plugin_instance  "%1%"
+                type             "gauge"
+                type_instance    "total_files_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "File Collection"
+                    subitem      "%1%"
+                    path         "%path%"
+                    units         "eps"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/file/stats/eventsources/<^(?!total_.*).*$>/total_files"
+                plugin           "logcollector_logcollection.file"
+                plugin_instance  "%1%"
+                type             "counter"
+                type_instance    "total_files"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "File Collection"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/file/stats/eventsources/<^(?!total_.*).*$>/total_bytes"
+                plugin           "logcollector_logcollection.file"
+                plugin_instance  "%1%"
+                type             "counter"
+                type_instance    "total_bytes"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "File Collection"
+                    subitem      "%1%"
+                    path         "%path%"
+                    units        "bytes"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/file/stats/eventsources/<^(?!total_.*).*$>/total_bytes_rate"
+                plugin           "logcollector_logcollection.file"
+                plugin_instance  "%1%"
+                type             "gauge"
+                type_instance    "total_bytes_rate"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "File Collection"
+                    subitem      "%1%"
+                    path         "%path%"
+                    units        "bytes"
+                    p1           "%1%"
+                </meta>
+            </stat>
+
+
+            # Windows Additions
+            <stat>
+                path             "/logcollection/windows/stats/eventsources/active_eventsources"
+                plugin           "logcollector_logcollection.windows"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "active_eventsources"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "Windows Collection"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/windows/stats/eventsources/error_eventsources"
+                plugin           "logcollector_logcollection.windows"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "error_eventsources"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "Windows Collection"
+                    path         "%path%"
+                </meta>
+            </stat>
+
+            # WorkManager
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/state"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "enumerated"
+                type_instance    "state"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    path         "%path%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    p1           "%1%"
+                </meta>
+                <enumData>
+                    none        "0"
+                    init        "1"
+                    deinit        "2"
+                    stopped        "3"
+                    stopping    "4"
+                    started        "5"
+                    starting    "6"
+                    pausing     "7"
+                    paused        "8"
+                    unknown     "9"
+                </enumData>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workgroup_num_enabled"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workgroup_num_enabled"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workgroup_num_continuous_processing"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workgroup_num_continuous_processing"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workgroup_threads"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workgroup_threads"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workgroups"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workgroups"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workgroups_on_queue_wait_time"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workgroups_on_queue_wait_time"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workgroups_with_work"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workgroups_with_work"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workgroups_with_work_percentage"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "percent"
+                type_instance    "workgroups_with_work_percentage"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workunit_queue_size"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workunit_queue_size"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workunit_threads"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workunit_threads"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workunit_threads_utilization"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "percent"
+                type_instance    "workunit_threads_utilization"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                    units         "%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workunits_being_processed"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workunits_being_processed"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workunits_processed"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workunits_processed"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workunits_on_queue"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workunits_on_queue"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/logcollection/<.*>/stats/workmanager/workunits_on_queue_wait_time"
+                plugin           "logcollector_logcollection.%1%.workmanager"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "workunits_on_queue_wait_time"
+                <meta>
+                    name         "&TITLE_CASE(%name%)"
+                    description  "%description%"
+                    category     "&TITLE_CASE(%1%) WorkManager"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            # End Service
+        </stats>
+    </Module>
+</Plugin>

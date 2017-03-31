@@ -1,0 +1,15 @@
+#
+# Cookbook Name:: {{ cookbook_name }}
+# Recipe:: default
+#
+# Copyright (C) 2016 RSA Security
+#
+# All rights reserved - Do Not Redistribute
+#
+
+include_recipe '{{ cookbook_name }}::accounts'
+include_recipe '{{ cookbook_name }}::groups'
+include_recipe '{{ cookbook_name }}::packages'
+include_recipe '{{ cookbook_name }}::firewall'
+include_recipe '{{ cookbook_name }}::filesystem'
+include_recipe '{{ cookbook_name }}::services'

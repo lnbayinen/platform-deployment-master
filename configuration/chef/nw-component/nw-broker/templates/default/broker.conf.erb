@@ -1,0 +1,273 @@
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin generic_cpp>
+    PluginModulePath "/usr/lib64/collectd"
+
+    <Module "NgNativeReader" "NwBroker-FastUpdate">
+        port      "56003"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "5"
+
+        <stats>
+            <stat>
+                path             "/sys/stats/service.status"
+                plugin           "broker_sys"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "service.status"
+                <meta>
+                    name         "Service State"
+                    description  "%description%"
+                    category     "ProcessInfo"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/stats/status"
+                plugin           "broker_broker"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "status"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Broker"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/stats/meta.rate"
+                plugin           "broker_broker"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Broker"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/stats/session.rate"
+                plugin           "broker_broker"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Broker"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/sdk/stats/queries.active"
+                plugin           "broker_sdk"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queries.active"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Broker"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/sdk/stats/queries.pending"
+                plugin           "broker_sdk"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queries.pending"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Broker"
+                    path         "%path%"
+                </meta>
+            </stat>
+        </stats>
+    </Module>
+
+    <Module "NgNativeReader" "NwBroker-NormalUpdate">
+        port      "56003"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "60"
+
+        <stats>
+            # Begin Service
+            <stat>
+                path             "/broker/devices/<.*>/stats/meta.rate"
+                plugin           "broker_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/devices/<.*>/stats/meta.rate.max"
+                plugin           "broker_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/devices/<.*>/stats/session.rate"
+                plugin           "broker_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/devices/<.*>/stats/session.rate.max"
+                plugin           "broker_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/devices/<.*>/stats/sessions.behind"
+                plugin           "broker_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "sessions.behind"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/devices/<.*>/stats/status"
+                plugin           "broker_devices.%1%"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "status"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/devices/<.*>/stats/time.last"
+                plugin           "broker_devices.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "time.last"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                    units        "UTC"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/devices/<.*>/stats/time.network"
+                plugin           "broker_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "time.network"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    path         "%path%"
+                    subitem      "%1%"
+                    p1           "%1%"
+                    units        "milliseconds"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/devices/<.*>/stats/time.network.max"
+                plugin           "broker_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "time.network.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    path         "%path%"
+                    subitem      "%1%"
+                    p1           "%1%"
+                    units        "milliseconds"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/stats/meta.rate.max"
+                plugin           "broker_broker"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Broker"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/broker/stats/session.rate.max"
+                plugin           "broker_broker"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Broker"
+                    path         "%path%"
+                </meta>
+            </stat>
+            # End Service
+        </stats>
+    </Module>
+</Plugin>

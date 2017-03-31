@@ -1,0 +1,8 @@
+---
+- hosts: cookbooks
+  gather_facts: false
+  connection: local
+  vars:
+    target_dir: ..
+  roles:
+    - role: cookbook-maker

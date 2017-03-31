@@ -1,0 +1,51 @@
+{
+  "builders":
+  [
+    {
+      "type": "qemu",
+      "iso_url": "file:///home/ubuntu/ISO/CentOS-6.7-x86_64-minimal.iso",
+      "iso_checksum": "9381a24b8bee2fed0c26896141a64b69",
+      "iso_checksum_type": "md5",
+      "output_directory": "centos-6-basic",
+      "shutdown_command": "shutdown -P now",
+      "disk_size": 2048,
+      "format": "qcow2",
+      "headless": true,
+      "accelerator": "kvm",
+      "http_directory": "http",
+      "http_port_min": 10082,
+      "http_port_max": 10089,
+      "ssh_host_port_min": 2222,
+      "ssh_host_port_max": 2229,
+      "ssh_username": "root",
+      "ssh_password": "netwitness",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "1500s",
+      "vm_name": "centos-6-basic.img",
+      "net_device": "virtio-net",
+      "disk_interface": "virtio",
+      "qemuargs": [
+        [ "-m", "1024m" ],
+        ["-machine", "type=pc,accel=kvm"],
+        ["-device", "virtio-net-pci,netdev=user.0"]
+      ],
+      "boot_wait": "5s",
+      "boot_command":
+      [
+	"<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+      	"scripts/base.sh",
+        "scripts/epel.sh",
+        "scripts/cloud.sh",
+        "scripts/cleanup.sh",
+        "scripts/zerodisk.sh"
+      ]
+    }
+  ]
+}

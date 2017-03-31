@@ -1,0 +1,554 @@
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin generic_cpp>
+    PluginModulePath "/usr/lib64/collectd"
+
+    <Module "NgNativeReader" "NwConcentrator-FastUpdate">
+        port      "56005"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "10"
+
+        <stats>
+            <stat>
+                path             "/sys/stats/service.status"
+                plugin           "concentrator_sys"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "service.status"
+                <meta>
+                    name         "Service State"
+                    description  "%description%"
+                    category     "ProcessInfo"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/stats/status"
+                plugin           "concentrator_concentrator"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "status"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Concentrator"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/stats/meta.rate"
+                plugin           "concentrator_concentrator"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Concentrator"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/stats/session.rate"
+                plugin           "concentrator_concentrator"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Concentrator"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/sdk/stats/queries.active"
+                plugin           "concentrator_sdk"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queries.active"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Concentrator"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/sdk/stats/queries.pending"
+                plugin           "concentrator_sdk"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "queries.pending"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Concentrator"
+                    path         "%path%"
+                </meta>
+            </stat>
+        </stats>
+    </Module>
+
+    <Module "NgNativeReader" "NwConcentrator-NormalUpdate">
+        port      "56005"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "60"
+
+        <stats>
+            # Begin Service
+            <stat>
+                path             "/concentrator/devices/<.*>/stats/meta.rate"
+                plugin           "concentrator_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/devices/<.*>/stats/meta.rate.max"
+                plugin           "concentrator_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/devices/<.*>/stats/session.rate"
+                plugin           "concentrator_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/devices/<.*>/stats/session.rate.max"
+                plugin           "concentrator_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/devices/<.*>/stats/sessions.behind"
+                plugin           "concentrator_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "sessions.behind"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/devices/<.*>/stats/status"
+                plugin           "concentrator_devices.%1%"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "status"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/devices/<.*>/stats/time.last"
+                plugin           "concentrator_devices.%1%"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "time.last"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    subitem      "%1%"
+                    path         "%path%"
+                    p1           "%1%"
+                    units        "UTC"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/devices/<.*>/stats/time.network"
+                plugin           "concentrator_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "time.network"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    path         "%path%"
+                    subitem      "%1%"
+                    p1           "%1%"
+                    units        "milliseconds"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/devices/<.*>/stats/time.network.max"
+                plugin           "concentrator_devices.%1%"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "time.network.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Devices"
+                    path         "%path%"
+                    subitem      "%1%"
+                    p1           "%1%"
+                    units        "milliseconds"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/stats/meta.free.pages"
+                plugin           "concentrator_concentrator"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.free.pages"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Concentrator"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/stats/meta.rate.max"
+                plugin           "concentrator_concentrator"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Concentrator"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/stats/session.free.pages"
+                plugin           "concentrator_concentrator"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.free.pages"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Concentrator"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/stats/session.rate.max"
+                plugin           "concentrator_concentrator"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Concentrator"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/concentrator/config/rules/rule.errors"
+                plugin           "concentrator_concentrator"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "rule.errors"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Concentrator"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.free.space"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.free.space"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.bytes"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.free.space"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.free.space"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.rate"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.rate.max"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.total"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.total"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/meta.volume.bytes"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "meta.volume.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.bytes"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.rate"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.rate.max"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.rate.max"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.total"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.total"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/session.volume.bytes"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "session.volume.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/database/stats/status"
+                plugin           "concentrator_database"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "status"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Database"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/index.bytes"
+                plugin           "concentrator_index"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "index.bytes"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/memory.used"
+                plugin           "concentrator_index"
+                plugin_instance  ""
+                type             "gauge"
+                type_instance    "memory.used"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                    units         "bytes"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/time.begin"
+                plugin           "concentrator_index"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "time.begin"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/time.end"
+                plugin           "concentrator_index"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "time.end"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                </meta>
+            </stat>
+            <stat>
+                path             "/index/stats/values.added"
+                plugin           "concentrator_index"
+                plugin_instance  ""
+                type             "counter"
+                type_instance    "values.added"
+                <meta>
+                    name         "%name%"
+                    description  "%description%"
+                    category     "Index"
+                    path         "%path%"
+                </meta>
+            </stat>
+            # End Service
+        </stats>
+    </Module>
+</Plugin>

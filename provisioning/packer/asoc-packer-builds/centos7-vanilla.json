@@ -1,0 +1,47 @@
+{
+  "builders":
+  [
+    {
+      "type": "qemu",
+      "iso_url": "file:///mnt/buildStorage/linux/centos/7/cloud/iso/CentOS-7-x86_64-DVD-1511.iso",
+      "iso_checksum": "c875b0f1dabda14f00a3e261d241f63e",
+      "iso_checksum_type": "md5",
+      "output_directory": "centos-7-basic",
+      "shutdown_command": "shutdown -P now",
+      "disk_size": 2048,
+      "format": "qcow2",
+      "headless": true,
+      "accelerator": "kvm",
+      "http_directory": "http",
+      "http_port_min": 10082,
+      "http_port_max": 10089,
+      "ssh_host_port_min": 2222,
+      "ssh_host_port_max": 2229,
+      "ssh_username": "root",
+      "ssh_password": "netwitness",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "1500s",
+      "vm_name": "centos-7-basic.img",
+      "net_device": "virtio-net",
+      "disk_interface": "virtio",
+      "qemuargs": [
+        [ "-m", "1024m" ],
+        ["-machine", "type=pc,accel=kvm"],
+        ["-device", "virtio-net-pci,netdev=user.0"]
+      ],
+      "boot_wait": "5s",
+      "boot_command":
+      [
+	"<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/cloud_base.sh"
+      ]
+    }
+  ]
+}

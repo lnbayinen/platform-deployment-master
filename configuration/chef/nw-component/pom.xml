@@ -1,0 +1,76 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>pom</packaging>
+  <name>Platform Administration :: NW Cookbook Package</name>
+
+  <parent>
+    <artifactId>platform-deployment-root-pom</artifactId>
+    <groupId>com.rsa.asoc.platform</groupId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>../../../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>rsa-nwplatform-cm</artifactId>
+
+  <build>
+    <plugins>
+      <!-- create RPM -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>rpm-maven-plugin</artifactId>
+        <configuration>
+          <summary>Cookbook RPM</summary>
+          <mappings>
+            <mapping>
+              <directory>/opt/rsa/platform/nw-chef</directory>
+              <sources>
+                <source>
+                  <location>${basedir}</location>
+                  <includes>
+                    <include>client.rb</include>
+                  </includes>
+                </source>
+              </sources>
+            </mapping>
+            <mapping>
+              <directory>/opt/rsa/platform/nw-chef/cookbooks</directory>
+              <sources>
+                <source>
+                  <location>${basedir}</location>
+                  <includes>
+                    <include>**/</include>
+                  </includes>
+                  <excludes>
+                    <exclude>ansible/</exclude>
+                    <exclude>ohai-plugins/</exclude>
+                    <exclude>client.rb</exclude>
+                    <exclude>*.sh</exclude>
+                    <exclude>Berksfile</exclude>
+                    <exclude>*.lock</exclude>
+                    <exclude>*.xml</exclude>
+                    <exclude>*.md</exclude>
+                    <exclude>*.pyo</exclude>
+                    <exclude>*.pyc</exclude>
+                    <exclude>*.spec</exclude>
+                    <exclude>**/target/</exclude>
+                  </excludes>
+                </source>
+              </sources>
+            </mapping>
+            <mapping>
+              <directory>/opt/rsa/platform/nw-chef/ohai</directory>
+              <sources>
+                <source>
+                  <location>${basedir}/ohai-plugins</location>
+                </source>
+              </sources>
+            </mapping>
+          </mappings>
+          <description>
+            Configuration management files needed to support the RSA Netwitness deployment.
+          </description>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

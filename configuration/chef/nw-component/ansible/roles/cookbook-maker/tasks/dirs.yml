@@ -1,0 +1,9 @@
+---
+- name: '{{ cookbook_name }} : directories'
+  file:
+    path: '{{ target_dir }}/{{ cookbook_name }}/{{ item }}'
+    state: directory
+  with_items:
+    - attributes
+    - recipes
+    - spec/tests

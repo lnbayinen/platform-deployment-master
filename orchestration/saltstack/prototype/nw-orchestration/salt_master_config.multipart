@@ -1,0 +1,25 @@
+Content-Type: multipart/mixed; boundary="===============5045891833077711222=="
+MIME-Version: 1.0
+
+--===============5045891833077711222==
+Content-Type: text/cloud-config; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="host_config.yaml"
+
+#cloud-config
+manage_etc_hosts: true
+users:
+    - default
+
+--===============5045891833077711222==
+Content-Type: text/x-shellscript; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="salt_master_install.sh"
+
+#!/bin/bash
+rpm -ivh http://$RPM_SERVER/repos/misc/nwnode0-bootstrap-0-1.noarch.rpm
+/opt/rsa/nwnode0-boostrap/bootstrap-node0.sh
+
+--===============5045891833077711222==--

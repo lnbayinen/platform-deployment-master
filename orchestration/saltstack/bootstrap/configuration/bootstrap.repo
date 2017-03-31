@@ -1,0 +1,6 @@
+[bootstrap]
+name=Bootstrap Repo
+baseurl=file:///opt/rsa/platform/bootstrap-repo
+gpgcheck=1
+enabled=1
+cost=1

@@ -1,0 +1,23 @@
+[Unit]
+Description=High-performance, schema-free document-oriented database
+After=syslog.target network.target
+Wants=network.target
+
+[Service]
+Type=forking
+User=mongod
+Group=mongod
+EnvironmentFile=/etc/sysconfig/mongod
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+PermissionsStartOnly=true
+ExecStartPre=-/usr/bin/mkdir -p /var/run/mongodb
+ExecStartPre=-/usr/bin/chown -R mongod:mongod /var/run/mongodb
+ExecStartPre=-/bin/bash -c 'echo never > /sys/kernel/mm/transparent_hugepage/enabled'
+ExecStartPre=-/bin/bash -c 'echo never > /sys/kernel/mm/transparent_hugepage/defrag'
+PIDFile=/var/run/mongodb/mongod.pid
+PIDFile=/var/run/mongodb/mongod.pid
+ExecStart=/usr/bin/mongod $OPTIONS
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,28 @@
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+# Base collectd.conf configuration file
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+Hostname    "<%= @node_uuid %>"
+FQDNLookup   false
+BaseDir     "/var/lib/collectd"
+PIDFile     "/var/run/collectd.pid"
+PluginDir   "/usr/lib64/collectd"
+TypesDB     "/usr/share/collectd/types.db" "/usr/share/collectd/smstypes.db"
+#Interval     10
+#Timeout      2
+#ReadThreads  5
+
+# logging plugins
+LoadPlugin syslog
+
+LoadPlugin generic_cpp
+
+# Load component configs from /etc/collectd.d
+<Include "/etc/collectd.d">
+    Filter "*.conf"
+</Include>

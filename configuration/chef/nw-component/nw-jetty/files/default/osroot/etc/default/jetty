@@ -1,0 +1,9 @@
+# file: '/etc/default/jetty' must be present when jettyuax is installed
+
+export LD_LIBRARY_PATH=/usr/bin/lic
+
+JETTY_HOME=/opt/rsa/jetty9
+
+JAVA_OPTIONS="-Djava.awt.headless=true -Dcom.rsa.netwitness.carlos.LOG_ENABLE_SYSOUT=true -Xms6G -Xmx8G -XX:MaxMetaspaceSize=256m -Djdk.tls.ephemeralDHKeySize=2048 -Djavax.net.ssl.keyStore=/opt/rsa/carlos/keystore"
+
+JAVA_OPTIONS="${JAVA_OPTIONS} -XX:+OptimizeStringConcat -XX:+UseLargePages -XX:+UseG1GC"

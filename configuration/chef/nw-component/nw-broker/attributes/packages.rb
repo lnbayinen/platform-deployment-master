@@ -1,0 +1,1 @@
+default['nw-broker']['packages'] = []

@@ -1,0 +1,1 @@
+default['salt-master']['packages'] = []

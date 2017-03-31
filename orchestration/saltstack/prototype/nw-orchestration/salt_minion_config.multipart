@@ -1,0 +1,25 @@
+Content-Type: multipart/mixed; boundary="===============2126733365354389071=="
+MIME-Version: 1.0
+
+--===============2126733365354389071==
+Content-Type: text/cloud-config; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="host_config.yaml"
+
+#cloud-config
+manage_etc_hosts: true
+users:
+    - default
+
+--===============2126733365354389071==
+Content-Type: text/x-shellscript; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="salt_minion_install.sh"
+
+#!/bin/bash
+rpm -ivh http://$RPM_SERVER/repos/misc/nwnodeX-bootstrap-0-1.noarch.rpm
+/opt/rsa/nwnodeX-boostrap/bootstrap-nodeX.sh $MASTER_IP
+
+--===============2126733365354389071==--

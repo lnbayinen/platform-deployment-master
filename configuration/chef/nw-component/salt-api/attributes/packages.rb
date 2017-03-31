@@ -1,0 +1,1 @@
+default['salt-api']['packages'] = []

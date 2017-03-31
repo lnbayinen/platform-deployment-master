@@ -1,0 +1,478 @@
+
+# ESA Sample collectd.conf configuration file
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin "java">
+  <Plugin "GenericJMX">
+
+    ################
+    # MBean blocks #
+    ################
+
+    # Garbage collector information
+    # NAMING CONVENTION = <MBean "<ObjectName:type>">
+    <MBean "GarbageCollector">
+      ObjectName "java.lang:type=GarbageCollector,*"
+      InstancePrefix "GarbageCollector"
+      InstanceFrom "name"
+      <Value>
+        Type "invocations"
+        InstancePrefix "CollectionCount"
+        Table false
+        Attribute "CollectionCount"
+      </Value>
+      <Value>
+        Type "gauge"
+        InstancePrefix "CollectionTime"
+        Table false
+        Attribute "CollectionTime"
+      </Value>
+    </MBean>
+
+    # Generic heap/nonheap memory usage.
+    <MBean "Memory">
+      ObjectName "java.lang:type=Memory"
+      InstancePrefix "Memory"
+      <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-init"
+        Table false
+        Attribute "HeapMemoryUsage.init"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-max"
+        Table false
+        Attribute "HeapMemoryUsage.max"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-used"
+        Table false
+        Attribute "HeapMemoryUsage.used"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "HeapMemoryUsage-committed"
+        Table false
+        Attribute "HeapMemoryUsage.committed"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-init"
+        Table false
+        Attribute "NonHeapMemoryUsage.init"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-max"
+        Table false
+        Attribute "NonHeapMemoryUsage.max"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-used"
+        Table false
+        Attribute "NonHeapMemoryUsage.used"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+        InstancePrefix "NonHeapMemoryUsage-committed"
+        Table false
+        Attribute "NonHeapMemoryUsage.committed"
+      </Value>
+    </MBean>
+
+	# Operating System.
+	<MBean "OperatingSystem">
+      ObjectName "java.lang:type=OperatingSystem"
+      InstancePrefix "OperatingSystem"
+	  <Value>
+        Type "gauge"
+		InstancePrefix "ProcessCpuLoad"
+        Attribute "ProcessCpuLoad"
+      </Value>
+	  <Value>
+        Type "gauge"
+		InstancePrefix "ProcessCpuTime"
+        Attribute "ProcessCpuTime"
+      </Value>
+	  <Value>
+        Type "jmx_memory"
+		InstancePrefix "CommittedVirtualMemorySize"
+        Attribute "CommittedVirtualMemorySize"
+      </Value>
+	  <Value>
+        Type "gauge"
+		InstancePrefix "AvailableProcessors"
+        Attribute "AvailableProcessors"
+      </Value>
+    </MBean>
+
+	#ESA Service
+
+	<MBean "Alert-Engine">
+		ObjectName "com.rsa.netwitness.esa:type=Alert,subType=Engine,id=statistics"
+		InstancePrefix "Alert-Engine"
+
+		<Value>
+			Type "counter"
+			InstancePrefix "NumFired"
+			Attribute "NumFired"
+		</Value>
+	</MBean>
+
+	<MBean "Workflow-NextGen">
+		ObjectName "com.rsa.netwitness.esa:type=Workflow,subType=Source,id=nextgenAggregationSource"
+		InstancePrefix "Workflow-NextGen"
+		<Value>
+			Type "counter"
+			InstancePrefix "WorkUnitsProcessed"
+			Attribute "WorkUnitsProcessed"
+		</Value>
+		<Value>
+			Type "gauge"
+			InstancePrefix "WorkUnitProcessingRate"
+			Attribute "WorkUnitProcessingRate"
+		</Value>
+	</MBean>
+
+	<MBean "Workflow-MessageBus">
+		ObjectName "com.rsa.netwitness.esa:type=Workflow,subType=Source,id=messageBusSource"
+		InstancePrefix "Workflow-MessageBus"
+
+		<Value>
+			Type "counter"
+			InstancePrefix "DroppedInvalidPayload"
+			Attribute "DroppedInvalidPayload"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "DroppedMessages"
+			Attribute "DroppedMessages"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "DroppedMissingField"
+			Attribute "DroppedMissingField"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "NumEvents"
+			Attribute "NumEvents"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "WorkUnitsProcessed"
+			Attribute "WorkUnitsProcessed"
+		</Value>
+	</MBean>
+
+	<MBean "Workflow-FileFeed">
+		ObjectName "com.rsa.netwitness.esa:type=Workflow,subType=Source,id=fileFeedSource"
+		InstancePrefix "Workflow-FileFeed"
+
+		<Value>
+			Type "counter"
+			InstancePrefix "WorkUnitsProcessed"
+			Attribute "WorkUnitsProcessed"
+		</Value>
+	</MBean>
+
+	<MBean "License">
+		ObjectName "com.rsa.netwitness.esa:type=Service,subType=Status,id=license"
+		InstancePrefix "License"
+		<Value>
+			Type "gauge"
+			Table true
+			Attribute "CountDown"
+		</Value>
+	</MBean>
+
+	<MBean "Service-Monitor">
+		ObjectName "com.rsa.netwitness.esa:type=Service,subType=Monitor,id=connections"
+		InstancePrefix "Service-Monitor"
+		<Value>
+			Type "counter"
+			InstancePrefix "EndpointDetectedCount"
+			Attribute "EndpointDetectedCount"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "EndpointLostCount"
+			Attribute "EndpointLostCount"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "FailedClientCreationCount"
+			Attribute "FailedClientCreationCount"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "FailedServerCreationCount"
+			Attribute "FailedServerCreationCount"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "SuccessfulClientCreationCount"
+			Attribute "SuccessfulClientCreationCount"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "SuccessfulServerCreationCount"
+			Attribute "SuccessfulServerCreationCount"
+		</Value>
+	</MBean>
+
+	<MBean "Workflow-EsperFeed">
+		ObjectName "com.rsa.netwitness.esa:type=Workflow,subType=Worker,id=esperFeeder"
+		InstancePrefix "Workflow-EsperFeed"
+		<Value>
+			Type "counter"
+			InstancePrefix "RecordsDroppedAsLate"
+			Attribute "RecordsDroppedAsLate"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "RecordsFedOnTime"
+			Attribute "RecordsFedOnTime"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "RecordsForcedOut"
+			Attribute "RecordsForcedOut"
+		</Value>
+		<Value>
+			Type "gauge"
+			InstancePrefix "SecondsBetweenFeeds"
+			Attribute "SecondsBetweenFeeds"
+		</Value>
+		<Value>
+			Type "gauge"
+			InstancePrefix "StartOfTimeWindow"
+			Attribute "StartOfTimeWindow"
+		</Value>
+		<Value>
+			Type "gauge"
+			InstancePrefix "WindowDurationInSeconds"
+			Attribute "WindowDurationInSeconds"
+		</Value>
+		<Value>
+			Type "gauge"
+			InstancePrefix "WindowSize"
+			Attribute "WindowSize"
+		</Value>
+		<Value>
+			Type "gauge"
+			InstancePrefix "WindowUsedPercentage"
+			Attribute "WindowUsedPercentage"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "WorkUnitsProcessed"
+			Attribute "WorkUnitsProcessed"
+		</Value>
+	</MBean>
+
+	<MBean "Alert-Mail">
+		ObjectName "com.rsa.netwitness.esa:type=Alert,subType=Mail,id=statistics"
+		InstancePrefix "Alert-Mail"
+
+		<Value>
+			Type "counter"
+			InstancePrefix "MinutesSinceLastSuccessfulRequest"
+			Attribute "MinutesSinceLastSuccessfulRequest"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "SuccessfulProxyRequests"
+			Attribute "SuccessfulProxyRequests"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "SuccessfulRequests"
+			Attribute "SuccessfulRequests"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "UnsuccessfulProxyRequests"
+			Attribute "UnsuccessfulProxyRequests"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "UnsuccessfulRequests"
+			Attribute "UnsuccessfulRequests"
+		</Value>
+	</MBean>
+
+	<MBean "CEP-Engine">
+		ObjectName "com.rsa.netwitness.esa:type=CEP,subType=Engine,id=cepEngine"
+		InstancePrefix "CEP-Engine"
+		<Value>
+			Type "gauge"
+			InstancePrefix "AverageBytesPerMeta"
+			Attribute "AverageBytesPerMeta"
+		</Value>
+		<Value>
+			Type "gauge"
+			InstancePrefix "AverageMetaPerSession"
+			Attribute "AverageMetaPerSession"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "NumEventsOffered"
+			Attribute "NumEventsOffered"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "NumberMetaBytesOffered"
+			Attribute "NumberMetaBytesOffered"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "NumberMetaOffered"
+			Attribute "NumberMetaOffered"
+		</Value>
+	</MBean>
+
+	<MBean "CEP-Module">
+		ObjectName "com.rsa.netwitness.esa:type=CEP,subType=Module,id=cepModuleStats"
+		InstancePrefix "CEP-Module"
+
+		<Value>
+			Type "counter"
+			InstancePrefix "NumDeployed"
+			Attribute "NumDeployed"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "NumDisabled"
+			Attribute "NumDisabled"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "NumEventsFired"
+			Attribute "NumEventsFired"
+		</Value>
+		<Value>
+			Type "counter"
+			InstancePrefix "NumEventsOffered"
+			Attribute "NumEventsOffered"
+		</Value>
+
+	</MBean>
+
+	<MBean "CEP-Config">
+	ObjectName "com.rsa.netwitness.esa:type=CEP,subType=Module,id=configuration"
+	   <Value>
+            Type "string"
+			InstancePrefix "TrialRulesStatus"
+            Table true
+            Attribute "TrialRulesStatus"
+            <DataHandler "com.rsa.netwitness.sms.jmx.SMSJmxDataHandler">
+                <Stat>
+                    <Meta>
+					  name "Trial Rules Status"
+                      category "ESA-Metrics"
+					  description "Enabled indicates the trial rules are running normally. Disabled indicates all trial rules have stopped running because the Java Virtual Machine exceeded the threshold for memory usage. This threshold is set in the MemoryThresholdForTrialRules attribute."
+                    </Meta>
+					<EnumData>
+                           disabled "0"
+                           enabled "1"
+                    </EnumData>
+                </Stat>
+            </DataHandler>
+        </Value>
+
+	</MBean>
+
+	<MBean "ESA-Metrics">
+	ObjectName "com.rsa.netwitness.esa:type=CEP,subType=Metrics,id=statistics"
+	   <Value>
+            Type "gauge"
+            Table true
+            Attribute "EngineMetrics"
+            <DataHandler "com.rsa.netwitness.sms.jmx.ESAJmxDataHandler">
+                <Stat>
+                    <Meta>
+                      category "ESA-Metrics"
+					  description "Represents the number of bytes being used by all epser attributes across all esper instances in this service."
+					  units "bytes"
+                    </Meta>
+                </Stat>
+            </DataHandler>
+        </Value>
+	</MBean>
+
+	    <MBean "Module-statistics">
+            ObjectName "com.rsa.netwitness.esa:type=CEP,subType=Module,id=cepModuleStats"
+                <Value>
+                   Type "gauge"
+                   InstancePrefix "NumEnabled"
+                   Table true
+                   Attribute "NumEnabled"
+                   <DataHandler "com.rsa.netwitness.sms.jmx.SMSJmxDataHandler">
+                       <Stat>
+                           <Meta>
+                               name "Number Of Enabled ESA Rules"
+                               category "CEP-Module"
+                               description "Number of Enabled ESA  Rules"
+                          </Meta>
+                       </Stat>
+                    </DataHandler>
+                 </Value>
+             </MBean>
+
+             <MBean "Topology-statistics">
+             ObjectName "com.rsa.netwitness.esa:type=Topology,subType=statistics,id=topology"
+                 <Value>
+                     Type "string"
+                     InstancePrefix "ATDStatusString"
+                     Attribute "ATDStatusString"
+                     Table true
+                     <DataHandler "com.rsa.netwitness.sms.jmx.SMSJmxDataHandler">
+                        <Stat>
+                           <Meta>
+                              name "Threat Detection"
+                              category "ESA-Metrics"
+                              description "Indicates if theart detection is enabled or disabled"
+                           </Meta>
+                           <EnumData>
+                               Enabled "0"
+                               Disabled "1"
+                           </EnumData>
+                       </Stat>
+                     </DataHandler>
+                  </Value>
+              </MBean>
+
+
+    #####################
+    # Connection block  #
+    #####################
+    <Connection>
+      Host "<%= @node_uuid %>"
+      ServiceURL "service:jmx:rmi://localhost:50036/jndi/rmi://localhost:50035/carlos"
+      # NAMING CONVENTION = InstancePrefix "<componentId>_jmx-"
+      InstancePrefix "esa_jmx-"
+      Collect "GarbageCollector"
+      Collect "Memory"
+	  Collect "OperatingSystem"
+	  Collect "Alert-Engine"
+	  Collect "Workflow-NextGen"
+	  Collect "Workflow-MessageBus"
+	  Collect "Workflow-FileFeed"
+	  Collect "Workflow-EsperFeed"
+	  Collect "Service-Monitor"
+	  Collect "Alert-Mail"
+	  Collect "ESA-Metrics"
+	  Collect "CEP-Engine"
+	  Collect "CEP-Module"
+	  Collect "CEP-Config"
+	  Collect "Module-statistics"
+	  Collect "Topology-statistics"
+    </Connection>
+  </Plugin>
+</Plugin>

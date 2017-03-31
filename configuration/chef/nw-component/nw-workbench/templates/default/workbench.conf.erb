@@ -1,0 +1,43 @@
+#
+# Copyright (c) 2014 RSA The Security Division of EMC
+#
+
+<Plugin generic_cpp>
+    PluginModulePath "/usr/lib64/collectd"
+
+    <Module "NgNativeReader" "NwWorkbench-FastUpdate">
+        port      "56007"
+        ssl       "yes"
+        keypath   "<%= @keyfile %>"
+        certpath  "<%= @certfile %>"
+        interval  "10"
+
+        <stats>
+            <stat>
+                path             "/sys/stats/service.status"
+                plugin           "workbench_sys"
+                plugin_instance  ""
+                type             "string"
+                type_instance    "service.status"
+                <meta>
+                    name         "Service State"
+                    description  "%description%"
+                    category     "ProcessInfo"
+                    path         "%path%"
+                </meta>
+            </stat>
+        </stats>
+    </Module>
+
+
+#    <Module "NgNativeReader" "NwWorkbench-NormalUpdate">
+#        port      "56007"
+#        ssl       "yes"
+#        keypath   "<%= @keyfile %>"
+#        certpath  "<%= @certfile %>"
+#        interval  "60"
+#
+#        <stats>
+#        </stats>
+#    </Module>
+</Plugin>
